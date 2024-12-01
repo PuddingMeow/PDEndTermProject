@@ -1,0 +1,57 @@
+// == commandList == ！！！！！每個command后都要留空行！！！！！
+// dialogue
+// sysMsg
+// choice
+// branch i
+// endBranch
+// endChoice
+// statChange
+// endEvent
+//
+【事件標題】//文件第一行是事件標題。下一行不用空行。
+dialogue // command: 對白
+player // 角色：player 代表玩家。
+對白内容，自由發揮。
+// 效果：
+// 對白内容，自由發揮。
+// 每個 command 結束後都要留個空行！！！
+
+dialogue
+小傑 // 這行player以外的内容都將被解讀為角色名。
+「player你好！對白内容，自由發揮。」// player將被替換爲角色名。
+// 效果：
+// 小傑：「軟綿綿橘子貓你好！對白内容，自由發揮。」// 
+
+sysMsg // command：系統提示。
+提示内容。player將被替換為角色名。
+// 效果：
+// ＞＞提示内容。軟綿綿橘子貓將被替換爲角色名。
+
+choice // command：選擇支
+2 // branchCnt：選擇數
+選擇0 // 接下來每一行都是一個選項。
+選擇1
+// 效果：
+// (1) 選擇0
+// (2) 選擇1
+
+branch 0 // command: 進入選項0。choice後要立刻接branch。有幾個選項就要幾個 branch。
+
+// 可以接 dialogue 之類的。也可以直接 endEvent。
+
+endBranch // command：表示這個選擇支的結束。接下來會快進到 choiceEnd。
+
+branch 1 // command：進入選項1。
+
+// ...
+
+endBranch
+
+endChoice // command：表示這組選擇支的結束。endBranch後會直接快進到endChoice。
+
+statChange // command：改動數值。
+ATK // 數值名稱：（ATK, DEF, SPD, SPMAX, LUK，MNY）
+10 // 改變值。
+// 效果：後臺指令，不顯示在前端。
+
+endEvent // command：事件結束。
