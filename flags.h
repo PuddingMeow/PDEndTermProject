@@ -12,6 +12,9 @@ struct Flag {
     bool status;
 };
 
+
+// All FlagArrays are initialised with init_config/flagList.txt.
+// Use member functions to verify/update specific flags.
 class FlagArray{
     private:
         Flag* flag;
