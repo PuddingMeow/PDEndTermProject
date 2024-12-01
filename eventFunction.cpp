@@ -3,12 +3,11 @@
 #include <fstream>
 #include <stdexcept>
 #include <string>
-#include <vector>
-#include <windows.h> 
+#include <chrono>
 
 // pending task: ability to toggle and record flags.
 
-const int TEXT_SPEED_MS = 500;
+const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(500);
 const std::string playerName_placeholder = "軟綿綿橘子貓"; // to be replaced with getter function.
 
 // Should take MainCharacter as argument as well.
@@ -20,6 +19,7 @@ void parseAndProcessBranchingChoice(std::ifstream& event);
 void parseAndOutputSysMsg(std::ifstream& event);
 void parseAndProcessStatChange(std::ifstream& event);
 void replacePlayerName(std::string& line, std::string playerName);
+void delay_ms(std::chrono::milliseconds);
 
 int main() {
 	try{
@@ -27,7 +27,7 @@ int main() {
 		triggerEvent("event2.txt");
 		triggerEvent("event3.txt");
 	}
-	catch(std::invalid_argument e){
+	catch(std::invalid_argument const& e){
 		std::cout << e.what();
 	}
 	return 0;
@@ -40,14 +40,15 @@ bool triggerEvent(std::string eventFileName) {
 	std::ifstream event(path);
 	
 	if(!event.is_open()){
-		throw std::invalid_argument("File name does not exist.");
+		std::string errMsg = "File name does not exist: " + eventFileName + '\n';
+		throw std::invalid_argument(errMsg);
 	}
 	
 	// output event title.
 	std::string title = "";
 	std::getline(event, title);
 	std::cout << title << "\n";
-	Sleep(TEXT_SPEED_MS);
+	delay_ms(TEXT_DELAY);
 	
 	while(true){
 		std::string input = "";
@@ -71,7 +72,7 @@ bool triggerEvent(std::string eventFileName) {
 		}
 
 		std::getline(event, input); // skip line break.
-		Sleep(TEXT_SPEED_MS);
+		delay_ms(TEXT_DELAY);
 	}
 	
 	event.close();
@@ -118,10 +119,10 @@ void parseAndProcessBranchingChoice(std::ifstream& event) {
 			}
 			break;
 		}
-		catch(std::invalid_argument e){
+		catch(std::invalid_argument const& e){
 			std::cout << "＞＞請輸入有效數字！數字就好，括號不用～" << std::endl;
 		}
-		catch(std::out_of_range e){
+		catch(std::out_of_range const& e){
 			std::cout << "＞＞請輸入有效數字！選擇：（";
 			std::cout << "1";
 			for(int i = 1; i < branchCnt; ++i){
@@ -164,7 +165,7 @@ void parseAndProcessStatChange(std::ifstream& event) {
 	try{
 		value = stoi(value_string);
 	}
-	catch(std::invalid_argument e){
+	catch(std::invalid_argument const& e){
 		throw std::invalid_argument("Invalid statChange value.");
 	}
 
@@ -195,6 +196,21 @@ void replacePlayerName(std::string& line, std::string playerName) {
 	while(pos != std::string::npos){
 		line.replace(pos, 6, playerName);
 		pos = line.find("player", pos);
+	}
+
+	return;
+}
+
+void delay_ms(std::chrono::milliseconds ms){
+	using namespace std::chrono;
+
+	time_point<steady_clock> start = steady_clock::now();
+	while(true){
+		time_point<steady_clock> now = steady_clock::now();
+		milliseconds duration = duration_cast<milliseconds>(now - start);
+		if(duration >= ms){
+			break;
+		}
 	}
 
 	return;
