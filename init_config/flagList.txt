@@ -1,0 +1,4 @@
+3
+trainingWholeDay
+recruitXiaoJie_1
+recruitXiaoJie_2
