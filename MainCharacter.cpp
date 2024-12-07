@@ -1,5 +1,13 @@
 #include "MainCharacter.h"
 
+void MainCharacter::setName(string newName){
+    name = newName;
+}
+
+void MainCharacter::setPartner(string newPartner){
+    partner = newPartner;
+}
+
 void MainCharacter::addATK(int value){
     atk += value;
 }
