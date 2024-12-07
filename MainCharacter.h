@@ -3,7 +3,7 @@ using namespace std;
 
 class MainCharacter
 {
-private:
+protected:
     string name; //主角名稱
     int atk; //攻擊
     int def; //防禦
