@@ -29,6 +29,10 @@ public:
     int getMNY() { return mny; }; 
     string listPartner() { return partner; };
 
+    //setters
+    void setName(string newName);
+    void setPartner(string newPartner);
+
     //加or減各項數值
     void addATK(int value);
     void addDEF(int value);
