@@ -20,6 +20,10 @@ void MainCharacter::addSPLimit(int value){
     spLimit += value;
 }
 
+void MainCharacter::addSKL(int value){
+    skl += value;
+}
+
 void MainCharacter::addMNY(int value){
     mny += value;
 }
