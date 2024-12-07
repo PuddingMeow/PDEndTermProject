@@ -6,9 +6,10 @@
 // endBranch
 // endChoice
 // statChange
+// flag
 // endEvent
 //
-【事件標題】//文件第一行是事件標題。下一行不用空行。
+【事件標題】//文件第一行是事件標題。下一行不用空行！
 dialogue // command: 對白
 player // 角色：player 代表玩家。
 對白内容，自由發揮。
@@ -50,8 +51,11 @@ endBranch
 endChoice // command：表示這組選擇支的結束。endBranch後會直接快進到endChoice。
 
 statChange // command：改動數值。
-ATK // 數值名稱：（ATK, DEF, SPD, SPMAX, LUK，MNY）
+ATK // 數值名稱：（ATK, DEF, SPD, SKL, SPMAX, LUK，MNY）
 10 // 改變值。
 // 效果：後臺指令，不顯示在前端。
+
+flag // command：更新 flag 狀態
+flag_name 1 // 格式爲 flag_name，一個空格，1或0。
 
 endEvent // command：事件結束。

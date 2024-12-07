@@ -25,6 +25,9 @@ Flag* FlagArray::linearSearch(std::string flagName) const {
     return nullptr;
 }
 
+// default constructor builds flagArray with predesignated text file,
+// where all flag names are listed.
+// use the text file to add or remove flags.
 FlagArray::FlagArray() {
     std::ifstream file("init_config/flagList.txt");
 
@@ -47,11 +50,8 @@ FlagArray::FlagArray() {
 }
 
 FlagArray::FlagArray(const FlagArray& fa) {
-    if(this->flagCnt != fa.flagCnt){
-        delete [] this->flag;
-        this->flagCnt = fa.flagCnt;
-        this->flag = new Flag[this->flagCnt];
-    }
+    this->flagCnt = fa.flagCnt;
+    this->flag = new Flag[this->flagCnt];
 
     for(int i = 0; i < this->flagCnt; ++i){
         this->flag[i] = fa.flag[i];
@@ -62,25 +62,28 @@ FlagArray::~FlagArray() {
     delete [] this->flag;
 }
 
+// returns target flag status.
 bool FlagArray::checkFlagStatus(std::string flagName) const {
-    Flag* flag = this->linearSearch(flagName);
-    if(flag == nullptr){
+    Flag* targetFlag = this->linearSearch(flagName);
+    if(targetFlag == nullptr){
         std::string errMsg = "Flag does not exist: " + flagName;
         throw file_error(errMsg);
     }
-    return flag->status;
+    return targetFlag->status;
 }
 
+// updates target flag.
 void FlagArray::updateFlagStatus(std::string flagName, bool status) {
-    Flag* flag = this->linearSearch(flagName);
-    if(flag == nullptr){
+    Flag* targetFlag = this->linearSearch(flagName);
+    if(targetFlag == nullptr){
         std::string errMsg = "Flag does not exist: " + flagName;
         throw file_error(errMsg);
     }
-    flag->status = status;
+    targetFlag->status = status;
     return;
 }
 
+// print all flags.
 void FlagArray::print() const {
     for(int i = 0; i < this->flagCnt; ++i){
         std::cout << std::setw(20) << this->flag[i].name << " || ";

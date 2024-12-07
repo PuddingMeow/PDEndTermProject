@@ -1,4 +1,5 @@
 #include "eventFunction.h"
+#include "flags.h"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -18,10 +19,11 @@ void parseAndOutputdialogue(std::ifstream& event);
 void parseAndProcessBranchingChoice(std::ifstream& event);
 void parseAndOutputSysMsg(std::ifstream& event);
 void parseAndProcessStatChange(std::ifstream& event);
+void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags);
 void replacePlayerName(std::string& line, std::string playerName);
 void delay_ms(std::chrono::milliseconds);
 
-int main() {
+/*int main() {
 	try{
 		triggerEvent("event1.txt");
 		triggerEvent("event2.txt");
@@ -31,9 +33,9 @@ int main() {
 		std::cout << e.what();
 	}
 	return 0;
-}
+}*/
 
-bool triggerEvent(std::string eventFileName) {
+bool triggerEvent(std::string eventFileName, FlagArray& flags) {
 	std::string path = "events/";
 	path += eventFileName;
 	
@@ -67,6 +69,8 @@ bool triggerEvent(std::string eventFileName) {
 			}
 		}else if(input == "statChange"){
 			parseAndProcessStatChange(event);
+		}else if(input == "flag"){
+			parseAndProcessFlagUpdate(event, flags);
 		}else{
 			throw std::logic_error("Invalid file formatting.");
 		}
@@ -176,6 +180,8 @@ void parseAndProcessStatChange(std::ifstream& event) {
 		std::cout << "def changed by " << value << std::endl;
 	}else if(parameter == "SPD"){
 		std::cout << "spd changed by " << value << std::endl;
+	}else if(parameter == "SKL"){
+		std::cout << "skl changed by " << value << std::endl;
 	}else if(parameter == "LUK"){
 		std::cout << "luk changed by " << value << std::endl;
 	}else if(parameter == "MAXSP"){
@@ -186,6 +192,17 @@ void parseAndProcessStatChange(std::ifstream& event) {
 		throw std::invalid_argument("Parameter does not exist.");
 	}
 
+	return;
+}
+
+void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags) {
+	std::string flagName = "";
+	bool status = false;
+
+	event >> flagName >> status;
+	flags.updateFlagStatus(flagName, status);
+
+	std::getline(event, flagName); // clear \n for next .getline.
 	return;
 }
 

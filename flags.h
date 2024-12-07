@@ -1,3 +1,5 @@
+#ifndef FLAGS_H
+#define FLAGS_H
 #include <string>
 #include <stdexcept>
 
@@ -30,3 +32,5 @@ class FlagArray{
         void updateFlagStatus(std::string flagName, bool status);
         void print() const; // debug.
 };
+
+#endif

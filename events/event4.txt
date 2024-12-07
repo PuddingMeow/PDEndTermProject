@@ -1,0 +1,13 @@
+【flag test】
+dialogue
+player
+我好累啊。
+
+flag
+test_flag 1
+
+dialogue
+player
+真的好累。
+
+endEvent

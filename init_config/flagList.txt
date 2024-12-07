@@ -1,4 +1,5 @@
-3
+4
 trainingWholeDay
 recruitXiaoJie_1
 recruitXiaoJie_2
+test_flag
