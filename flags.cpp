@@ -38,8 +38,6 @@ FlagArray::FlagArray() {
     file >> this->flagCnt;
     this->flag = new Flag[flagCnt];
 
-    std::cout << flagCnt << '\n';
-
     std::string flagName = "";
     for(int i = 0; i < flagCnt; ++i){
         file >> flagName;
@@ -60,6 +58,24 @@ FlagArray::FlagArray(const FlagArray& fa) {
 
 FlagArray::~FlagArray() {
     delete [] this->flag;
+}
+
+const FlagArray& FlagArray::operator=(const FlagArray& fa) {
+    for(int i = 0; i < this->flagCnt; ++i){
+        this->flag[i].status = fa.flag[i].status;
+    }
+    return *this;
+}
+
+Flag& FlagArray::operator[](int index) {
+    if(index < 0 || index >= this->flagCnt){
+        throw std::out_of_range("FlagArray: invalid index accessed");
+    }
+    return (this->flag[index]);
+}
+
+int FlagArray::getFlagCnt() const {
+    return (this->flagCnt);
 }
 
 // returns target flag status.

@@ -1,5 +1,6 @@
 #ifndef FLAGS_H
 #define FLAGS_H
+
 #include <string>
 #include <stdexcept>
 
@@ -28,6 +29,10 @@ class FlagArray{
         FlagArray(const FlagArray&);
         ~FlagArray();
 
+        const FlagArray& operator=(const FlagArray&);
+        Flag& operator[](int index);
+
+        int getFlagCnt() const;
         bool checkFlagStatus(std::string flagName) const;
         void updateFlagStatus(std::string flagName, bool status);
         void print() const; // debug.
