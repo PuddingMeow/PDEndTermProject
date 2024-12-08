@@ -8,4 +8,7 @@ public:
     NpcCharacter() : MainCharacter()
     {
     }
+    NpcCharacter(const NpcCharacter& another) : MainCharacter(another)
+    {
+    }
 };
