@@ -20,6 +20,7 @@ public:
     MainCharacter() : name("鸣喆"), atk(0), def(0), spd(0), luk(0), spLimit(0), skl(0), mny(0), partner("no_partner")
     {
     };
+    MainCharacter(const MainCharacter& another);
 
     //getters
     string getName() { return name; };
