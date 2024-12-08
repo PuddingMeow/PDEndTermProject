@@ -21,7 +21,19 @@ public:
     {
     };
     MainCharacter(const MainCharacter& another);
-
+    MainCharacter& operator=(const MainCharacter& another) {
+    if (this == &another) return *this; // 防止自我賦值
+    name = another.name;
+    atk = another.atk;
+    def = another.def;
+    spd = another.spd;
+    luk = another.luk;
+    spLimit = another.spLimit;
+    skl = another.skl;
+    mny = another.mny;
+    partner = another.partner;
+    return *this;
+}
     //getters
     string getName() { return name; };
     int getATK() { return atk; };
