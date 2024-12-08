@@ -26,13 +26,13 @@ public:
 
     // 複製建構子
     Team(const Team& t){
-        this->score = t.score;
-        this->isPlayerTeam = t.isPlayerTeam;
-        this->A = t.A;
-        this->B = t.B;
-        this->front = t.front;
-        this->turn = t.turn;
-        this->receiveDifficulity = t.receiveDifficulity;
+        score = t.score;
+        isPlayerTeam = t.isPlayerTeam;
+        A = t.A;
+        B = t.B;
+        front = t.front;
+        turn = t.turn;
+        receiveDifficulity = t.receiveDifficulity;
 
     }
 
@@ -102,9 +102,12 @@ public:
             cout << "接球難度不能為負數！\n" << endl;
         }
     }
-
+    
+    int getReceiveDifficulity(){
+        return receiveDifficulity;
+    }
     // 確認是否是玩家的隊伍
-    bool isPlayerTeamFunc() const {
+    bool getIsPlayerTeam() const {
         return isPlayerTeam;
     }
 };
