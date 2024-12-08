@@ -14,13 +14,27 @@ private:
 
 public:
     // 建構子：初始化隊伍
-    Team(MainCharacter& playerA, MainCharacter& playerB, bool isPlayer)
-        : A(playerA), B(playerB), isPlayerTeam(isPlayer), score(0), front(true), turn(0), receiveDifficulity(0) {}
+    Team(MainCharacter& playerA, MainCharacter& playerB, bool isPlayer){
+        this->score = 0;
+        this->isPlayerTeam = isPlayer;
+        this->A = playerA;
+        this->B = playerB;
+        this->front = 0;
+        this->turn = 0;
+        this->receiveDifficulity = 0;
+    }
 
     // 複製建構子
-    Team(const Team& t)
-        : score(t.score), isPlayerTeam(t.isPlayerTeam), A(t.A), B(t.B),
-          front(t.front), turn(t.turn), receiveDifficulity(t.receiveDifficulity) {}
+    Team(const Team& t){
+        this->score = t.score;
+        this->isPlayerTeam = t.isPlayerTeam;
+        this->A = t.A;
+        this->B = t.B;
+        this->front = t.front;
+        this->turn = t.turn;
+        this->receiveDifficulity = t.receiveDifficulity;
+
+    }
 
     // 賦值運算子
     Team& operator=(const Team& t) {
@@ -85,7 +99,7 @@ public:
         if (rd >= 0) {
             receiveDifficulity = rd;
         } else {
-            cout << "接球難度不能為負數！" << endl;
+            cout << "接球難度不能為負數！\n" << endl;
         }
     }
 
