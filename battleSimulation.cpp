@@ -49,6 +49,7 @@ void flipCoin(Team& player, Team& oppo) {
 
 // 發球模擬，返回比賽是否繼續
 bool serve(Team& playerTeam, Team& opponent, bool playing) {
+    //TODO:缺少攻擊前後場及接球時計算前後場
     int serveMethodNum = 0;
     if (playerTeam.isServeTurn()) {
         serveMethodNum = chooseServeMethod(playerTeam, opponent);
@@ -81,7 +82,7 @@ int chooseServeMethod(Team& playerTeam, Team& opponent) {
 }
 
 void chooseFront(Team& t) {
-    if (t.isPlayerTeamFunc()) {
+    if (t.getIsPlayerTeam()) {
         int frontPlayer;
         cout << "你要讓誰站在前場？(1: 玩家, 2: 隊友)\n";
         try {
@@ -118,8 +119,20 @@ bool serveDamageCaculate(Team& serveSide, Team& opposide, int serveMethodNum, bo
     return playing;
 }
 
-void receive() {
-    // TODO: 實作接球邏輯
+bool receive(Team& receiveSide, Team& oppoSide, bool playing, int aim) {
+    chooseFront(receiveSide);
+    if(aim == 1){ //aim = 1 attack to front side
+        playing = checkSuccess(receiveSide.frontPlayer().getDEF()*1.5 + receiveSide.frontPlayer().getSPD() - receiveSide.getReceiveDifficulity());
+    }else{
+        playing = checkSuccess(receiveSide.backPlayer().getDEF()*1.5 + receiveSide.backPlayer().getSPD() - receiveSide.getReceiveDifficulity());
+    }
+    if(playing){
+        return playing;
+    }else{
+        cout << "沒有接到球QAQ \n 對方得分!\n";
+        oppoSide.addPoint();
+        return playing;
+    }
     cout << "接球邏輯尚未實作！\n";
 }
 
@@ -142,7 +155,7 @@ int main() {
         bool playing = true;
         playing = serve(playerTeam, opponent, playing);
         while (playing) {
-            receive();
+            receive(playerTeam, opponent, playing, 1);
             attack();
         }
     }
