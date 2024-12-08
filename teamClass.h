@@ -1,4 +1,4 @@
-#include <iostream> // 用於測試和輸出
+#include <bits/stdc++.h>// 用於測試和輸出
 #include "MainCharacter.h" // 假設 MainCharacter 定義在此檔案中
 using namespace std;
 
