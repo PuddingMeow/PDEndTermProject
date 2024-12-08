@@ -1,3 +1,6 @@
+#ifndef MAINCHARACTER_H
+#define MAINCHARACTER_H
+
 #include <string>
 using namespace std;
 
@@ -14,7 +17,7 @@ protected:
     int mny; //錢錢
     string partner; //夥伴(應該只有一位)
 public:
-    MainCharacter() : atk(0), def(0), spd(0), luk(0), spLimit(0), skl(0), mny(0)
+    MainCharacter() : name("鸣喆"), atk(0), def(0), spd(0), luk(0), spLimit(0), skl(0), mny(0), partner("no_partner")
     {
     };
 
@@ -43,3 +46,5 @@ public:
     void addMNY(int value);
 
 };
+
+#endif

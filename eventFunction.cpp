@@ -1,24 +1,18 @@
 #include "eventFunction.h"
 #include "flags.h"
+#include "MainCharacter.h"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
 #include <string>
 #include <chrono>
 
-// pending task: ability to toggle and record flags.
-
 const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(500);
-const std::string playerName_placeholder = "軟綿綿橘子貓"; // to be replaced with getter function.
 
-// Should take MainCharacter as argument as well.
-// It should update relevant variables through get/increment functions.
-// I'll add it in once its ready.
-bool triggerEvent(std::string eventFileName);
-void parseAndOutputdialogue(std::ifstream& event);
+void parseAndOutputdialogue(std::ifstream& event, std::string playerName);
 void parseAndProcessBranchingChoice(std::ifstream& event);
-void parseAndOutputSysMsg(std::ifstream& event);
-void parseAndProcessStatChange(std::ifstream& event);
+void parseAndOutputSysMsg(std::ifstream& event, std::string playerName);
+void parseAndProcessStatChange(std::ifstream& event, MainCharacter& player);
 void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags);
 void replacePlayerName(std::string& line, std::string playerName);
 void delay_ms(std::chrono::milliseconds);
@@ -35,7 +29,7 @@ void delay_ms(std::chrono::milliseconds);
 	return 0;
 }*/
 
-bool triggerEvent(std::string eventFileName, FlagArray& flags) {
+bool triggerEvent(std::string eventFileName, MainCharacter& player, FlagArray& flags) {
 	std::string path = "events/";
 	path += eventFileName;
 	
@@ -56,11 +50,11 @@ bool triggerEvent(std::string eventFileName, FlagArray& flags) {
 		std::string input = "";
 		std::getline(event, input);
 		if(input == "dialogue"){
-			parseAndOutputdialogue(event);
+			parseAndOutputdialogue(event, player.getName());
 		}else if(input == "choice"){
 			parseAndProcessBranchingChoice(event);
 		}else if(input == "sysMsg"){
-			parseAndOutputSysMsg(event);
+			parseAndOutputSysMsg(event, player.getName());
 		}else if(input == "endEvent"){
 			break;
 		}else if(input == "endBranch"){
@@ -68,7 +62,7 @@ bool triggerEvent(std::string eventFileName, FlagArray& flags) {
 				std::getline(event, input);
 			}
 		}else if(input == "statChange"){
-			parseAndProcessStatChange(event);
+			parseAndProcessStatChange(event, player);
 		}else if(input == "flag"){
 			parseAndProcessFlagUpdate(event, flags);
 		}else{
@@ -83,7 +77,7 @@ bool triggerEvent(std::string eventFileName, FlagArray& flags) {
 	return true;
 }
 
-void parseAndOutputdialogue(std::ifstream& event) {
+void parseAndOutputdialogue(std::ifstream& event, std::string playerName) {
 	std::string input = "";
 
 	std::getline(event, input);
@@ -92,7 +86,7 @@ void parseAndOutputdialogue(std::ifstream& event) {
 	}
 
 	std::getline(event, input);
-	replacePlayerName(input, playerName_placeholder);
+	replacePlayerName(input, playerName);
 	std::cout << input << std::endl;
 
 	return;
@@ -149,16 +143,16 @@ void parseAndProcessBranchingChoice(std::ifstream& event) {
 	return;
 }
 
-void parseAndOutputSysMsg(std::ifstream& event) {
+void parseAndOutputSysMsg(std::ifstream& event, std::string playerName) {
 	std::string input = "";
 
 	std::getline(event, input);
-	replacePlayerName(input, playerName_placeholder);
+	replacePlayerName(input, playerName);
 	std::cout << "＞＞ " << input << std::endl;
 	return;
 }
 
-void parseAndProcessStatChange(std::ifstream& event) {
+void parseAndProcessStatChange(std::ifstream& event, MainCharacter& player) {
 	std::string parameter = "";
 	std::string value_string = "";
 
@@ -175,19 +169,19 @@ void parseAndProcessStatChange(std::ifstream& event) {
 
 	// placeholder actions. to be replaced with increment functions.
 	if(parameter == "ATK"){
-		std::cout << "atk changed by " << value << std::endl;
+		player.addATK(value);
 	}else if(parameter == "DEF"){
-		std::cout << "def changed by " << value << std::endl;
+		player.addDEF(value);
 	}else if(parameter == "SPD"){
-		std::cout << "spd changed by " << value << std::endl;
+		player.addSPD(value);
 	}else if(parameter == "SKL"){
-		std::cout << "skl changed by " << value << std::endl;
+		player.addSKL(value);
 	}else if(parameter == "LUK"){
-		std::cout << "luk changed by " << value << std::endl;
+		player.addLUK(value);
 	}else if(parameter == "MAXSP"){
-		std::cout << "maxsp changed by " << value << std::endl;
+		player.addSPLimit(value);
 	}else if(parameter == "MNY"){
-		std::cout << "mny changed by " << value << std::endl;
+		player.addMNY(value);
 	}else{
 		throw std::invalid_argument("Parameter does not exist.");
 	}
