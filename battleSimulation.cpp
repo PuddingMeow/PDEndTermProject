@@ -3,6 +3,15 @@
 #include "teamClass.h"
 using namespace std;
 
+// 擲硬幣，決定誰先發球
+void flipCoin(Team& player, Team& oppo);
+
+// 檢查某事件是否成功（機率為 a%）
+bool checkSuccess(int a);
+
+// 發球模擬，返回比賽是否繼續
+bool serve(Team& serveSide, Team& oppoSide, bool playing);
+
 // 計算發球造成的傷害，返回比賽是否繼續
 bool serveDamageCaculate(Team& serveSide, Team& oppoSide, int serveMethodNum, bool playing);
 
@@ -12,26 +21,72 @@ int chooseServeMethod();
 // 選擇誰站在前排
 void chooseFront(Team& t);
 
+//模擬接球，返回這一分的比賽是否繼續
+bool receive(Team& receiveSide, Team& oppoSide, bool playing);
+
+//模擬攻擊流程，返回有沒有人得分，返回這一分的比賽是否繼續
+bool attack(Team& attackSide, Team& oppoSide, bool playing);
+
 //判斷舉球是否成功
-bool setBall(Team& attackSide, bool playing);
+bool setBall(Team& attackSide, Team& oppoSide, bool playing);
 
 //選擇攻擊方式
 int chooseAttackMethod();
 
 //選擇攻擊位置
-int chooseAttackAim();
+int chooseAim();
 
 //計算攻擊傷害
 bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum, bool playing);
 
-// 檢查某事件是否成功（機率為 a%）
+
+int main() {
+    srand(time(NULL));
+
+    MainCharacter player, A, B, C;
+    player.addDEF(1200);
+    Team opponent(A, B, false);
+    Team playerTeam(player, C, true);
+
+    flipCoin(playerTeam, opponent);
+    int endScore = 15;
+
+    while (playerTeam.getScore() < endScore && opponent.getScore() < endScore) {
+        cout << "========== 比賽進行中 ==========" << endl;
+        cout << "現在分數\n你的隊伍：" << playerTeam.getScore() << '\n';
+        cout << "對手隊伍：" << opponent.getScore() << '\n';
+        bool playing = true;
+        if(playerTeam.isServeTurn()){
+            playing = serve(playerTeam, opponent, playing);
+        }else{
+            playing = serve(opponent, playerTeam, playing);
+        }
+        while (playing) {
+            if(playerTeam.isRecieveTurn()){
+                playing = receive(playerTeam, opponent, playing);
+            }else if(opponent.isRecieveTurn()){
+                playing = receive(opponent, playerTeam, playing);
+            }
+            if(playing){
+                if(playerTeam.isAttackTurn()){
+                    playing = attack(playerTeam, opponent, playing);
+                }else if (opponent.isAttackTurn()){
+                    playing = attack(opponent, playerTeam, playing);
+                }
+            }
+        }
+    }
+
+    cout << (playerTeam.getScore() == endScore ? "恭喜你贏了！\n" : "你輸了！\n");
+    return 0;
+}
+
 bool checkSuccess(int a) {
     int dice = rand() % 100+1;
     cout << "[DEBUG] 擲骰子點數: " << dice << " (成功機率: " << a << "%)" << endl;
     return dice < a;
 }
 
-// 擲硬幣，決定誰先發球
 void flipCoin(Team& player, Team& oppo) {
     int playerChoice = 0;
     cout << "========== 擲硬幣階段 ==========" << endl;
@@ -68,11 +123,14 @@ bool serve(Team& serveSide, Team& oppoSide, bool playing) {
     int serveMethodNum = 0;
     if (serveSide.getIsPlayerTeam()) {
         cout << "[DEBUG] 現在是玩家隊伍的發球回合" << endl;
-        serveMethodNum = chooseServeMethod();   
+        serveMethodNum = chooseServeMethod();
+        serveSide.setAttackAim(chooseAim());
     } else {
         cout << "[DEBUG] 現在是對手隊伍的發球回合" << endl;
         serveMethodNum = rand() % 4 + 1;
+        serveSide.setAttackAim(rand() % 2 + 1);
     }
+
     playing = serveDamageCaculate(serveSide, oppoSide, serveMethodNum, playing);
     return playing;
 }
@@ -97,10 +155,10 @@ int chooseServeMethod() {
 }
 
 void chooseFront(Team& t) {
-    cout << "========== 前後場選擇階段 ==========" << endl;
+    cout << "========== 防守分配階段 ==========" << endl;
     if (t.getIsPlayerTeam()) {
         int frontPlayer;
-        cout << "你要讓誰站在前場？(1: 玩家, 2: 隊友)\n";
+        cout << "你要讓誰站在前場防守？(1: 玩家, 2: 隊友)\n";
         try {
             cin >> frontPlayer;
             if (frontPlayer != 1 && frontPlayer != 2) {
@@ -132,7 +190,8 @@ bool serveDamageCaculate(Team& serveSide, Team& oppoSide, int serveMethodNum, bo
     } else if (serveMethodNum == 4 && checkSuccess(99)) {
         oppoSide.setReceiveDifficulity(15 + serveSide.backPlayer().getSKL() * 0.3);
     } else {
-        cout << "發球失誤！對方得分～\n";
+        if(serveSide.getIsPlayerTeam()) cout << "發球失誤！對方得分QAQ\n";
+        if(!serveSide.getIsPlayerTeam()) cout << "對方發球失誤！你們得分啦～\n";
         oppoSide.addPoint();
         oppoSide.setTurn(1); //換對方發球
         serveSide.setTurn(2); //己方接球
@@ -141,10 +200,10 @@ bool serveDamageCaculate(Team& serveSide, Team& oppoSide, int serveMethodNum, bo
     return playing;
 }
 
-bool receive(Team& receiveSide, Team& oppoSide, bool playing, int aim) {
+bool receive(Team& receiveSide, Team& oppoSide, bool playing) {
     cout << "========== 接球階段 ==========" << endl;
     chooseFront(receiveSide);
-    if (aim == 1) {
+    if (oppoSide.getAttackAim() == 1) {
         playing = checkSuccess(receiveSide.frontPlayer().getDEF() * 1.5 + receiveSide.frontPlayer().getSPD() - receiveSide.getReceiveDifficulity());
     } else {
         playing = checkSuccess(receiveSide.backPlayer().getDEF() * 1.5 + receiveSide.backPlayer().getSPD() - receiveSide.getReceiveDifficulity());
@@ -175,47 +234,51 @@ bool receive(Team& receiveSide, Team& oppoSide, bool playing, int aim) {
             oppoSide.setTurn(1); //對手發球
             return playing;
         }
-        
     }
-    
 }
 
 bool attack(Team& attackSide, Team& oppoSide, bool playing) {
     cout << "========== 攻擊階段 ==========" << endl;
     int attackMethod = 0;
-//    int attackAim = 0; //1 前場 2後場 0初始 
     if(attackSide.getIsPlayerTeam()){
         attackMethod = chooseAttackMethod();
     }else{
         attackMethod = rand() % 4 + 1;
     }
-    playing = setBall(attackSide, playing);
+    playing = setBall(attackSide, oppoSide, playing);
     if(!playing) return playing;
     if(attackSide.getIsPlayerTeam()){
-//        attackAim = chooseAttackAim();
+        attackSide.setAttackAim(chooseAim());
     }else{
-//        attackAim = rand() % 2 + 1;
+        attackSide.setAttackAim(rand() % 2 + 1);
     }
     playing = attackDamageCaculate(attackSide, oppoSide, attackMethod, playing);
     return playing;
 }
 
-bool setBall(Team& attackSide, bool playing){
+bool setBall(Team& attackSide, Team& oppoSide, bool playing){
+    cout << "========== 舉球階段 ==========" << endl;
     playing = checkSuccess(attackSide.frontPlayer().getSPD()*0.2+attackSide.frontPlayer().getSKL()*0.8+70);
     if(attackSide.getIsPlayerTeam()){
         if(playing){
-            cout << "舉球成功！";
+            cout << "你的舉球非常漂亮的畫了一到弧線！\n";
             return playing;
         }else{
-            cout << "舉球時，手滑掉了？？？\n對手獲得一分！";
+            cout << "舉球時，手滑掉了？？？\n對手獲得一分！\n";
+            oppoSide.addPoint();
+            oppoSide.setTurn(1);
+            attackSide.setTurn(2);
             return playing;
         }
     }else{
          if(playing){
-            cout << "對方舉球成功！";
+            cout << "對方舉球成功！\n";
             return playing;
         }else{
-            cout << "對方舉球時只顧著看你的絕世容顏\n球掉到地上，你獲得一分！";
+            cout << "對方舉球時只顧著看你的絕世容顏\n球掉到地上，你獲得一分！\n";
+            oppoSide.addPoint();
+            oppoSide.setTurn(1);
+            attackSide.setTurn(2);
             return playing;
         }
     }
@@ -239,7 +302,8 @@ int chooseAttackMethod(){
     cout << "[DEBUG] 選擇的攻擊方式: " << attackMethodNum << endl;
     return attackMethodNum;
 }
-int chooseAttackAim(){
+int chooseAim(){
+    cout << "========== 選擇攻擊目標階段 ==========" << endl;
     int attackAimNum = 0;
     cout << "你想要把球打到對方場上的哪個地方呢？\n";
     cout << "(1) 前場 (2) 後場\n";
@@ -252,7 +316,7 @@ int chooseAttackAim(){
         cout << e.what();
         cin.clear(); //XXX:但其實我沒搞懂這在幹啥
         cin.ignore(INT_MAX, '\n');
-        return chooseAttackAim();
+        return chooseAim();
     }
     cout << "[DEBUG] 選擇的攻擊位置: " << attackAimNum << endl;
     return attackAimNum;
@@ -268,7 +332,8 @@ bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum,
     } else if (attackMethodNum == 4 && checkSuccess(99)) {
         oppoSide.setReceiveDifficulity(20 + attackSide.backPlayer().getSKL() * 0.1);
     } else {
-        cout << "攻擊失誤！對方得分～\n";
+        if(attackSide.getIsPlayerTeam()) cout << "攻擊失誤！對方得分QAQ\n";
+        if(!attackSide.getIsPlayerTeam()) cout << "對方攻擊失誤！你們得分啦～\n";
         oppoSide.addPoint();
         oppoSide.setTurn(1); //換對方發球
         attackSide.setTurn(2); //己方接球
@@ -276,44 +341,3 @@ bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum,
     }
     return playing;
 }
-int main() {
-    srand(time(NULL));
-
-    MainCharacter player, A, B, C;
-    player.addDEF(1200);
-    Team opponent(A, B, false);
-    Team playerTeam(player, C, true);
-
-    flipCoin(playerTeam, opponent);
-    int endScore = 15;
-
-    while (playerTeam.getScore() < endScore && opponent.getScore() < endScore) {
-        cout << "========== 比賽進行中 ==========" << endl;
-        cout << "現在分數\n你的隊伍：" << playerTeam.getScore() << '\n';
-        cout << "對手隊伍：" << opponent.getScore() << '\n';
-        bool playing = true;
-        if(playerTeam.isServeTurn()){
-            playing = serve(playerTeam, opponent, playing);
-        }else{
-            playing = serve(opponent, playerTeam, playing);
-        }
-        while (playing) {
-            if(playerTeam.isRecieveTurn()){
-                playing = receive(playerTeam, opponent, playing, 1);
-            }else if(opponent.isRecieveTurn()){
-                playing = receive(opponent, playerTeam, playing, 1);
-            }
-            if(playing){
-                if(playerTeam.isAttackTurn()){
-                    playing = attack(playerTeam, opponent, playing);
-                }else if (opponent.isAttackTurn()){
-                    playing = attack(opponent, playerTeam, playing);
-                }
-            }
-        }
-    }
-
-    cout << (playerTeam.getScore() == endScore ? "恭喜你贏了！\n" : "你輸了！\n");
-    return 0;
-}
-
