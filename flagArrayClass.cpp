@@ -1,4 +1,4 @@
-#include "flags.h"
+#include "flagArrayClass.h"
 #include <iostream>
 #include <fstream>
 #include <string>

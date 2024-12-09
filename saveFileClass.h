@@ -1,7 +1,7 @@
-#ifndef SAVEFILE_H
-#define SAVEFILE_H
+#ifndef SAVEFILECLASS_H
+#define SAVEFILECLASS_H
 
-#include "flags.h"
+#include "flagArrayClass.h"
 #include "MainCharacter.h"
 
 class SaveFile {
