@@ -1,4 +1,4 @@
-#include "eventClass.h"
+#include "eventFunction.h"
 #include "flagArrayClass.h"
 #include "MainCharacter.h"
 #include <iostream>
@@ -17,17 +17,13 @@ void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags);
 void replacePlayerName(std::string& line, std::string playerName);
 void delay_ms(std::chrono::milliseconds);
 
-Event::Event(std::string fileName) : fileName(fileName)
-{
-}
-
-bool Event::trigger(MainCharacter& player, FlagArray& flags) {
-	std::string path = "events/" + this->fileName;
+bool triggerEvent(std::string fileName, MainCharacter& player, FlagArray& flags) {
+	std::string path = "events/" + fileName;
 	
 	std::ifstream event(path);
 	
 	if(!event.is_open()){
-		std::string errMsg = "File name does not exist: " + this->fileName + '\n';
+		std::string errMsg = "File name does not exist: " + fileName + '\n';
 		throw std::invalid_argument(errMsg);
 	}
 	
