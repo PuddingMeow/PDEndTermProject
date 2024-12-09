@@ -58,7 +58,7 @@ public:
     void addPoint() {
         score++;
     }
-
+    
     // 設定前排球員 (1: A, 2: B)
     void setFront(int frontNum) {
         front = (frontNum == 2);
