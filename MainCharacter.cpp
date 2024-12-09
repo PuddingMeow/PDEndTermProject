@@ -12,7 +12,7 @@ MainCharacter::MainCharacter(const MainCharacter& another){
     this->partner = another.partner;
 }
 
-MainCharacter& MainCharacter::operater=(const MainCharacter& another){
+MainCharacter& MainCharacter::operator=(const MainCharacter& another){
     if (this == &another){
         return *this; // 防止自我賦值
     }   

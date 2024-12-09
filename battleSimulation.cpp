@@ -152,10 +152,12 @@ int main() {
     int endScore = 15;
 
     while (playerTeam.getScore() < endScore && opponent.getScore() < endScore) {
+        cout << "現在分數\n你的隊伍：" << playerTeam.getScore() << '\n';
+        cout << "對手隊伍：" << opponent.getScore() << '\n';
         bool playing = true;
         playing = serve(playerTeam, opponent, playing);
         while (playing) {
-            receive(playerTeam, opponent, playing, 1);
+            playing = receive(playerTeam, opponent, playing, 1);
             attack();
         }
     }
