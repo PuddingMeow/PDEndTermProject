@@ -1,5 +1,5 @@
-#include "saveFile.h"
-#include "flags.h"
+#include "saveFileClass.h"
+#include "flagArrayClass.h"
 #include "MainCharacter.h"
 #include <iostream>
 #include <fstream>

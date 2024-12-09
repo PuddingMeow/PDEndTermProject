@@ -1,5 +1,5 @@
-#ifndef FLAGS_H
-#define FLAGS_H
+#ifndef FLAGARRAYCLASS_H
+#define FLAGARRAYCLASS_H
 
 #include <string>
 #include <stdexcept>

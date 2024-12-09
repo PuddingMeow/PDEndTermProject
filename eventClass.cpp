@@ -1,5 +1,5 @@
-#include "eventFunction.h"
-#include "flags.h"
+#include "eventClass.h"
+#include "flagArrayClass.h"
 #include "MainCharacter.h"
 #include <iostream>
 #include <fstream>
