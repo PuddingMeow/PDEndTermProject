@@ -2,7 +2,7 @@
 #define EVENTCLASS_H
 
 #include <string>
-#include "FlagArrayClass.h"
+#include "flagArrayClass.h"
 #include "MainCharacter.h"
 
 class Event {
@@ -15,4 +15,10 @@ class Event {
         bool trigger(MainCharacter& player, FlagArray& flags);
 };
 
+<<<<<<< HEAD
 #endif
+=======
+bool triggerEvent(std::string eventFileName, MainCharacter& player, FlagArray& flags);
+
+#endif
+>>>>>>> a517355067180e969342a96a1bf94bfd255cc5a1
