@@ -17,26 +17,17 @@ void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags);
 void replacePlayerName(std::string& line, std::string playerName);
 void delay_ms(std::chrono::milliseconds);
 
-/*int main() {
-	try{
-		triggerEvent("event1.txt");
-		triggerEvent("event2.txt");
-		triggerEvent("event3.txt");
-	}
-	catch(std::invalid_argument const& e){
-		std::cout << e.what();
-	}
-	return 0;
-}*/
+Event::Event(std::string fileName) : fileName(fileName)
+{
+}
 
-bool triggerEvent(std::string eventFileName, MainCharacter& player, FlagArray& flags) {
-	std::string path = "events/";
-	path += eventFileName;
+bool Event::trigger(MainCharacter& player, FlagArray& flags) {
+	std::string path = "events/" + this->fileName;
 	
 	std::ifstream event(path);
 	
 	if(!event.is_open()){
-		std::string errMsg = "File name does not exist: " + eventFileName + '\n';
+		std::string errMsg = "File name does not exist: " + this->fileName + '\n';
 		throw std::invalid_argument(errMsg);
 	}
 	

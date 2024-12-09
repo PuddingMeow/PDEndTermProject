@@ -12,9 +12,7 @@ class Event {
     public:
         Event(std::string fileName);
 
-        
+        bool trigger(MainCharacter& player, FlagArray& flags);
 };
-
-bool triggerEvent(std::string eventFileName, MainCharacter& player, FlagArray& flags);
 
 #endif
