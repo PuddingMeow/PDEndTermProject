@@ -12,6 +12,22 @@ MainCharacter::MainCharacter(const MainCharacter& another){
     this->partner = another.partner;
 }
 
+MainCharacter& MainCharacter::operater=(const MainCharacter& another){
+    if (this == &another){
+        return *this; // 防止自我賦值
+    }   
+    this->name = another.name;
+    this->atk = another.atk;
+    this->def = another.def;
+    this->spd = another.spd;
+    this->luk = another.luk;
+    this->spLimit = another.spLimit;
+    this->skl = another.skl;
+    this->mny = another.mny;
+    this->partner = another.partner;
+    return *this;
+}
+
 void MainCharacter::setName(string newName){
     name = newName;
 }
