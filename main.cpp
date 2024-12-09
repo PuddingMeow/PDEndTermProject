@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include "./MainCharacter.h"
 using namespace std;
 /* what we should have
 主要事項：
@@ -36,7 +37,7 @@ void dayEnd(int& dayCnt, MainCharacter player){
     cout << "防禦力：" << player.getDEF() << '\n';
     cout << "敏捷度：" << player.getSPD() << '\n';
     cout << "幸運值：" << player.getLUK() << '\n'; //感覺加了比較好玩
-    cout << "精力值上限：" << player.getSPlimit() << '\n';
+    cout << "精力值上限：" << player.getSPLimit() << '\n';
     cout << "錢包餘額：" << player.getMNY() << '\n';
     cout << "你的隊友：" << player.listPartner() << '\n';
     dayCnt ++;
