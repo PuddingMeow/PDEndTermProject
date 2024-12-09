@@ -11,7 +11,8 @@ private:
     bool front;               // 誰在前面 (0 是 A，1 是 B)
     int turn;                 // 回合狀態 (0: 初始化, 1: 發球, 2: 接球, 3: 攻擊)
     int receiveDifficulity;   // 接球的難度值
-
+    int attackAim; //球打到對面場的哪裡 (0: 初始化 1: 前場, 2: 後場)
+                   
 public:
     // 建構子：初始化隊伍
     Team(MainCharacter& playerA, MainCharacter& playerB, bool isPlayer){
@@ -22,6 +23,7 @@ public:
         this->front = 0;
         this->turn = 0;
         this->receiveDifficulity = 0;
+        this->attackAim = 0;
     }
 
     // 複製建構子
@@ -33,7 +35,7 @@ public:
         front = t.front;
         turn = t.turn;
         receiveDifficulity = t.receiveDifficulity;
-
+        attackAim = t.attackAim;
     }
 
     // 賦值運算子
@@ -46,6 +48,7 @@ public:
         front = t.front;
         turn = t.turn;
         receiveDifficulity = t.receiveDifficulity;
+        attackAim = t.attackAim;
         return *this;
     }
 
@@ -103,11 +106,22 @@ public:
         }
     }
     
+    //getReceiveDifficulity
     int getReceiveDifficulity(){
         return receiveDifficulity;
     }
+
     // 確認是否是玩家的隊伍
     bool getIsPlayerTeam() const {
         return isPlayerTeam;
+    }
+
+    //getAttackAim
+    int getAttackAim() const {
+        return attackAim;
+    }
+
+    void setAttackAim(int aim) {
+        attackAim = aim;
     }
 };
