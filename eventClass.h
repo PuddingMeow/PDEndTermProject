@@ -2,7 +2,7 @@
 #define EVENTCLASS_H
 
 #include <string>
-#include "FlagArrayClass.h"
+#include "flagArrayClass.h"
 #include "MainCharacter.h"
 
 class Event {
