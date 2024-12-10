@@ -1,5 +1,17 @@
 #include "MainCharacter.h"
 
+MainCharacter::MainCharacter(string name, int atk, int def, int spd, int luk, int spLimit, int skl, int mny, string partnerName){
+    this->name = name;
+    this->atk = atk;
+    this->def = def;
+    this->spd = spd;
+    this->luk = luk;
+    this->spLimit = spLimit;
+    this->skl = skl;
+    this->mny = mny;
+    this->partner = partnerName;
+}
+
 MainCharacter::MainCharacter(const MainCharacter& another){
     this->name = another.name;
     this->atk = another.atk;

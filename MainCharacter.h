@@ -20,6 +20,8 @@ public:
     MainCharacter() : name("鸣喆"), atk(0), def(0), spd(0), luk(0), spLimit(0), skl(0), mny(0), partner("no_partner")
     {
     };
+    MainCharacter(string name, int atk, int def, int spd, int luk, int spLimit, int skl, int mny, string partnerName);
+
     MainCharacter(const MainCharacter& another);
     MainCharacter& operator=(const MainCharacter& another);
     //getters
