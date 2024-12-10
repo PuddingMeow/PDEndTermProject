@@ -70,7 +70,7 @@ void mainMenu(SaveFile& save) {
         std::cout << "(1) 開始新游戲\n";
         std::cout << "(2) 讀取存檔\n";
         std::cout << "(3) 結束游戲\n";
-        std::cout << "\n ~by times-1 && mcchiang && changi~ \n\n";
+        std::cout << "\n ~by times1 && mcchiang && changi~ \n\n";
 
         std::cout << "＞＞你的選擇：";
         std::string raw_input = "";
@@ -103,7 +103,7 @@ void mainMenu(SaveFile& save) {
             action_success = loadSave(save);
             break;
         case 3:
-            std::cout << "謝謝游玩~~";
+            std::cout << "謝謝遊玩~~";
             delay_ms(TEXT_DELAY);
             delay_ms(TEXT_DELAY);
             exit(0);
