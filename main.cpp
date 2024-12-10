@@ -16,6 +16,11 @@ void dayStart(int dayCnt);
 void dayEnd(int& dayCnt, MainCharacter player);
 
 void choosePartner(SaveFile& save);
+MainCharacter opponent1("長尾高袋鼠", 10, 30, 10, 0, 0, 5, 300, "很帥的學長");
+MainCharacter opponent2("很帥的學長", 30, 30, 40, 0, 0, 40, 300, "長尾高袋鼠");
+MainCharacter partner1("小傑", 20, 20, 20, 0, 0, 20, 300, "");
+MainCharacter partner2("嚐溢", 50, 5, 10, 0, 0, 40, 300, "");
+
 
 int main(){
     int dayCnt = 1; //現在的天數
@@ -64,7 +69,7 @@ void mainMenu(SaveFile& save) {
         std::cout << "(1) 開始新游戲\n";
         std::cout << "(2) 讀取存檔\n";
         std::cout << "(3) 結束游戲\n";
-        std::cout << "\n ~by times-1 && mcchiang && changi~ \n\n";
+        std::cout << "\n ~by times1 && mcchiang && changi~ \n\n";
 
         std::cout << "＞＞你的選擇：";
         std::string raw_input = "";
@@ -97,7 +102,7 @@ void mainMenu(SaveFile& save) {
             action_success = loadSave(save);
             break;
         case 3:
-            std::cout << "謝謝游玩~~";
+            std::cout << "謝謝遊玩~~";
             delay_ms(TEXT_DELAY);
             delay_ms(TEXT_DELAY);
             exit(0);
@@ -296,14 +301,14 @@ void choosePartner(SaveFile& save) {
     bool partner1_recruited = true;
 
     if(partner1_recruited){
-        //partnerList.push_back(/*partner A*/);
+        partnerList.push_back(partner1);
     }
 
     // perform checks for partner B
     bool partner2_recruited = true;
 
     if(partner2_recruited){
-        //partnerList.push_back(/*partner B*/);
+        partnerList.push_back(partner2);
     }
 
 

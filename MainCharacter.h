@@ -17,9 +17,11 @@ protected:
     int mny; //錢錢
     string partner; //夥伴(應該只有一位)
 public:
-    MainCharacter() : name("鸣喆"), atk(0), def(0), spd(0), luk(0), spLimit(0), skl(0), mny(0), partner("no_partner")
+    MainCharacter() : name("鸣喆"), atk(15), def(15), spd(15), luk(0), spLimit(0), skl(15), mny(200), partner("no_partner")
     {
     };
+    MainCharacter(string name, int atk, int def, int spd, int luk, int spLimit, int skl, int mny, string partnerName);
+
     MainCharacter(const MainCharacter& another);
     MainCharacter& operator=(const MainCharacter& another);
     //getters
