@@ -142,7 +142,7 @@ sysMsg
 精力+1
 
 statChange
-SPLIMIT
+MAXSP
 1
 
 statChange

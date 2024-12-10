@@ -1,7 +1,7 @@
-5
+6
 firstTraining
 changi_1
 changi_2
 changi_happy
 recruit_changi
-recruit_xiaoJie
+recruit_xiaojie

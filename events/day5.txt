@@ -1,5 +1,4 @@
 【第五天-比賽前一天】
-
 sysMsg
 距離比賽只剩一天囉，你現在感覺如何？
 
@@ -75,6 +74,8 @@ sysMsg
 
 sysMsg
 防禦力+1
+
+sysMsg
 精力+1
 
 statChange
@@ -82,7 +83,7 @@ DEF
 1
 
 statChange
-SPLIMIT
+MAXSP
 1
 
 dialogue
@@ -100,6 +101,9 @@ endChoice
 dialogue
 player
 「在明天的比賽到來前，
+
+dialogue
+player
 我還有一個長久以來積累的問題想問...」
 
 sysMsg
@@ -109,7 +113,7 @@ dialogue
 player
 「你到底是誰？為什麼你要幫我那麼多？」
 
-sysMcg
+sysMsg
 好吧...事到如今我也只能跟你坦承
 
 sysMsg

@@ -460,7 +460,7 @@ void daySimulation(int dayCnt, SaveFile& save) {
                     throw std::logic_error(msg);
                 }
             }
-            std::cout << "＞＞剩餘行動次數：（" << actionsTaken << "／3）\n";
+            std::cout << "＞＞剩餘行動次數：（" << 3 - actionsTaken << "／3）\n";
             menu.trigger(player, flags);
             ++actionsTaken;
         }else if(command == "endDay"){
@@ -474,7 +474,7 @@ void daySimulation(int dayCnt, SaveFile& save) {
     }
 
     // update save data.
-    save.update(dayCnt, player, flags);
+    save.update(dayCnt + 1, player, flags);
     save.exportTo();
     std::cout << "＞＞存檔已更新。";
 

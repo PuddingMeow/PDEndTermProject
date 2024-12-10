@@ -21,7 +21,6 @@ MainCharacter opponent2("很帥的學長", 30, 30, 40, 0, 0, 40, 300, "長尾高
 MainCharacter partner1("小傑", 20, 20, 20, 0, 0, 20, 300, "");
 MainCharacter partner2("嚐溢", 50, 5, 10, 0, 0, 40, 300, "");
 
-
 int main(){
     int dayCnt = 1; //現在的天數
     int nextBattleDay = 6;
@@ -31,6 +30,7 @@ int main(){
         SaveFile save(1);
 
         mainMenu(save);
+        dayCnt = save.getDayCnt();
 
         bool winState = false;
         while(dayCnt <= finalDay){
