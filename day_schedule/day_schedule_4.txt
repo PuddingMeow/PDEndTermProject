@@ -12,7 +12,7 @@ working.txt
 打工
 辛辛勤勤打工工，老老實實賺錢錢。
 option
-wandering.txt
+pickUpGun.txt
 隨便走走
 虛度光陰。這樣真的好嗎...？
 endAction
