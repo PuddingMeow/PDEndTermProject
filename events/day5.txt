@@ -62,7 +62,7 @@ player
 
 dialogue
 player
-看來我是徹底的瘋了...
+看來我是徹底的瘋了...」
 
 sysMsg
 好，我們先不管那三個聲音是哪來的
@@ -87,11 +87,11 @@ SPLIMIT
 
 dialogue
 player
-哇！我感覺我沒那麼緊張了
+「哇！我感覺我沒那麼緊張了」
 
 dialogue
 player
-精神勝利法萬歲！
+「精神勝利法萬歲！」
 
 endBranch
 
