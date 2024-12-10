@@ -1,0 +1,60 @@
+event
+event1.txt
+
+action
+option
+training_atk.txt
+ATK Training
+Train your offensive capabilities!
+stat
+MNY
+-
+2000
+option
+event3.txt
+Go Outside
+Touch grass lol.
+option
+event2.txt
+Go to School
+Leave your dorms and go to lectures!
+endAction
+
+gatedEvent
+stat
+MNY
+-
+0
+flag
+test_flag
+1
+event
+event3.txt
+
+action
+option
+training_atk.txt
+ATK Training
+Train your offensive capabilities! Requires 2000 gold.
+stat
+MNY
+-
+2000
+option
+event3.txt
+Go Outside
+Touch grass lol.
+option
+event4.txt
+Trigger Flag
+get that flag.
+endAction
+
+gatedEvent
+flag
+test_flag
+1
+event
+event3.txt
+
+endDay

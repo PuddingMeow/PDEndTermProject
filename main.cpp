@@ -3,29 +3,8 @@
 #include "flagArrayClass.h"
 #include "saveFileClass.h"
 #include "eventFunction.h"
+#include "battleSimulationFunc.h"
 using namespace std;
-/* what we should have
-主要事項：
-1. character/player object
-2. main function(interface & daily progression)
-3. event system
-4. training system(可與event一起做？)
-5. teammate recruiting(與event一起……？也跟flags有關)
-6. match system
-
-次要事項：
-1. save system
-2. items & inventory(?)
-*/
-
-
-/*所以我現在是這樣設計的
-a file of character design (of course you can split it into many files)
-some files about event designs (最後統整為一個檔案方便匯入)
-some files about daily progression (同上)
-a file about teammate recruiting(not now)
-some files about match system.(not now)*/
-
 
 //每天開始的固定處理與輸出
 void dayStart(int dayCnt){ 

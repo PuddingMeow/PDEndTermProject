@@ -93,7 +93,7 @@ void parseAndProcessBranchingChoice(std::ifstream& event) {
 	int playerChoice = 0;
 	while(true){
 		std::cout << "＞＞你的選擇：";
-		std::cin >> input;
+		std::getline(std::cin, input);
 		try{
 			playerChoice = std::stoi(input) - 1;
 			if(playerChoice < 0 || playerChoice >= branchCnt){
