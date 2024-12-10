@@ -15,10 +15,12 @@ void printSaveList();
 void dayStart(int dayCnt);
 void dayEnd(int& dayCnt, MainCharacter player);
 
+void choosePartner(SaveFile& save);
+
 int main(){
     int dayCnt = 1; //現在的天數
     int nextBattleDay = 6;
-    int finalDay = 12; //數值我歲便寫的2，最後一天
+    int finalDay = 6; //數值我歲便寫的2，最後一天
 
     while(true){
         SaveFile save(1);
@@ -29,6 +31,8 @@ int main(){
             dayStart(dayCnt);
 
             if(dayCnt == nextBattleDay){
+                choosePartner(save);
+
                 MainCharacter player = save.getPlayer();
                 //bool winState = battleSimulation(player, , , );
                 nextBattleDay += 6;
@@ -281,4 +285,70 @@ void dayEnd(int& dayCnt, MainCharacter player){
     cout << "錢包餘額：" << player.getMNY() << '\n';
     cout << "你的隊友：" << player.listPartner() << '\n';
     dayCnt ++;
+}
+
+void choosePartner(SaveFile& save) {
+    MainCharacter player = save.getPlayer();
+    FlagArray flags = save.getFlags();
+
+    std::vector<MainCharacter> partnerList;
+    
+    // perform checks for partner A
+    bool partner1_recruited = true;
+
+    if(partner1_recruited){
+        partnerList.push_back(/*partner A*/);
+    }
+
+    // perform checks for partner B
+    bool partner2_recruited = true;
+
+    if(partner2_recruited){
+        partnerList.push_back(/*partner B*/);
+    }
+
+
+    if(partnerList.size() == 0){
+        return;
+    }
+
+    int player_choice = 0;
+    while(true){
+        std::cout << "＞＞請選擇你的隊友！\n";
+        for(int i = 0; i < partnerList.size(); ++i){
+            std::cout << "(" << i + 1 << ")" << partnerList[i].getName() << "\n";
+        }
+
+        // prompt and get player input.
+        std::cout << "＞＞你的選擇：";
+        std::string raw_input = "";
+        std::getline(std::cin, raw_input);
+
+        // verify input.
+        try{
+            player_choice = stoi(raw_input);
+            if(player_choice <= 0 || player_choice > partnerList.size()){
+                throw std::out_of_range("player_choice out of range");
+            }
+        }catch(std::invalid_argument& e){
+            std::cout << "＞＞請輸入有效數字！數字就好，括號不用～\n";
+        }catch(std::out_of_range& e){
+            std::cout << "＞＞請輸入有效數字！選擇：（";
+            std::cout << "1";
+            for(int i = 1; i < 3; ++i){
+                std::cout << "," << i + 1;
+            }
+            std::cout << "）\n";
+        }
+    
+        --player_choice;
+
+        player.setPartner(partnerList[player_choice].getName());
+        std::cout << "＞＞你選擇的隊友是" << player.listPartner() << "！請在比賽中一起好好加油吧～！\n";
+    }
+
+    // update save.
+    save.update(save.getDayCnt(), player, flags);
+
+    return;
 }

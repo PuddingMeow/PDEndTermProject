@@ -349,7 +349,7 @@ void daySimulation(int dayCnt, SaveFile& save) {
     FlagArray flags = save.getFlags();
 
     // import schedule file.
-    std::string path = "day_schedule\\day_schedule_" + to_string(dayCnt) + ".txt";
+    std::string path = "day_schedule/day_schedule_" + to_string(dayCnt) + ".txt";
     std::ifstream file(path);
     if(file.is_open() == false){
         std::string msg = path + " does not exist.";
@@ -357,6 +357,7 @@ void daySimulation(int dayCnt, SaveFile& save) {
     }
 
     // parse file.
+    int actionsTaken = 0;
     while(true){
         std::string command = "";
         std::getline(file, command);
@@ -459,8 +460,9 @@ void daySimulation(int dayCnt, SaveFile& save) {
                     throw std::logic_error(msg);
                 }
             }
-            menu.print();
+            std::cout << "＞＞剩餘行動次數：（" << actionsTaken << "／3）\n";
             menu.trigger(player, flags);
+            ++actionsTaken;
         }else if(command == "endDay"){
             break;
         }else{
