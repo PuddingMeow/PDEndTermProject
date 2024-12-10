@@ -41,6 +41,7 @@ int chooseAim();
 //計算攻擊傷害
 bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum, bool playing);
 
+
 //battleSimulationFunction, use in main.cpp
 bool battleSimulation(MainCharacter& player, MainCharacter& partner, MainCharacter& opponent1, MainCharacter& opponent2){
     string playerTeamName = "";
