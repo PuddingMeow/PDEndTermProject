@@ -7,15 +7,12 @@
 #include <string>
 #include <chrono>
 
-const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(500);
-
 void parseAndOutputdialogue(std::ifstream& event, std::string playerName);
 void parseAndProcessBranchingChoice(std::ifstream& event);
 void parseAndOutputSysMsg(std::ifstream& event, std::string playerName);
 void parseAndProcessStatChange(std::ifstream& event, MainCharacter& player);
 void parseAndProcessFlagUpdate(std::ifstream& event, FlagArray& flags);
 void replacePlayerName(std::string& line, std::string playerName);
-void delay_ms(std::chrono::milliseconds);
 
 bool triggerEvent(std::string fileName, MainCharacter& player, FlagArray& flags) {
 	std::string path = "events/" + fileName;
