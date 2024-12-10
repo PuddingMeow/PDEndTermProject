@@ -1,7 +1,10 @@
 #include <bits/stdc++.h>
-#include <cstdlib>
 #include "teamClass.h"
 using namespace std;
+
+//輸出中間緩衝
+const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(800);
+void delay_ms(std::chrono::milliseconds ms);
 
 // 擲硬幣，決定誰先發球
 void flipCoin(Team& player, Team& oppo);
@@ -41,20 +44,43 @@ bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum,
 
 
 int main() {
+    //設定亂數種子
     srand(time(NULL));
-
+    
     MainCharacter player, A, B, C;
     player.addDEF(1200);
-    Team opponent(A, B, false);
-    Team playerTeam(player, C, true);
+    B.addDEF(30);
+    string playerTeamName = "";
+    cout << "你的隊名要叫做什麼？\n>>";
+    getline(cin, playerTeamName);
+    if (playerTeamName.empty()) {
+        cout << "隊名不能為空！請重新輸入。\n";
+        getline(cin, playerTeamName);
+    }
+    if (cin.fail()) {
+        cin.clear();  // 清除錯誤狀態
+        cin.ignore(INT_MAX, '\n');  // 清空緩衝區
+        cout << "輸入錯誤，請重新輸入。\n";
+        getline(cin, playerTeamName);
+    }
+    Team opponent(A, B, false, "我是超強的對手啦哈哈");
+    Team playerTeam(player, C, true, playerTeamName);
+    
+    cout << "==========比賽開始！==========\n";
+    cout << "由 " << playerTeam.getTeamName() << " 對上 " << opponent.getTeamName() << " ！\n";
+    int endScore = 15;
+    cout << "當分數到達 " << endScore << " 分時遊戲結束！\n";
+    delay_ms(TEXT_DELAY);
 
     flipCoin(playerTeam, opponent);
-    int endScore = 15;
 
     while (playerTeam.getScore() < endScore && opponent.getScore() < endScore) {
+        delay_ms(TEXT_DELAY);
         cout << "========== 比賽進行中 ==========" << endl;
         cout << "現在分數\n你的隊伍：" << playerTeam.getScore() << '\n';
         cout << "對手隊伍：" << opponent.getScore() << '\n';
+        delay_ms(TEXT_DELAY);
+        
         bool playing = true;
         if(playerTeam.isServeTurn()){
             playing = serve(playerTeam, opponent, playing);
@@ -81,16 +107,33 @@ int main() {
     return 0;
 }
 
+void delay_ms(std::chrono::milliseconds ms){
+	using namespace std::chrono;
+
+	time_point<steady_clock> start = steady_clock::now();
+	while(true){
+		time_point<steady_clock> now = steady_clock::now();
+		milliseconds duration = duration_cast<milliseconds>(now - start);
+		if(duration >= ms){
+			break;
+		}
+	}
+
+	return;
+}
+
 bool checkSuccess(int a) {
     int dice = rand() % 100+1;
     cout << "[DEBUG] 擲骰子點數: " << dice << " (成功機率: " << a << "%)" << endl;
+    delay_ms(TEXT_DELAY);
     return dice < a;
 }
 
 void flipCoin(Team& player, Team& oppo) {
     int playerChoice = 0;
-    cout << "========== 擲硬幣階段 ==========" << endl;
-    cout << "你要選正面還是反面? (1: 正面, 2: 反面)\n";
+    cout << "\n========== 擲硬幣階段 ==========" << endl;
+    cout << "擲硬幣決定誰先發球！\n";
+    cout << "你要選正面還是反面? (1: 正面, 2: 反面)\n>>";
     try {
         cin >> playerChoice;
         if (playerChoice != 1 && playerChoice != 2) {
@@ -104,14 +147,16 @@ void flipCoin(Team& player, Team& oppo) {
     }
 
     int coinResult = rand() % 2 + 1; // 1: 正面, 2: 反面
-    cout << "[DEBUG] 擲硬幣結果: " << (coinResult == 1 ? "正面" : "反面") << endl;
-
+    cout << "擲硬幣結果: " << (coinResult == 1 ? "正面" : "反面") << endl;
+    delay_ms(TEXT_DELAY);
     if (playerChoice == coinResult) {
         cout << "恭喜你猜中了！由你們這隊先發球！\n";
+        delay_ms(TEXT_DELAY);
         player.setTurn(1);
         oppo.setTurn(2);
     } else {
         cout << "你猜錯了！由對面先發球！\n";
+        delay_ms(TEXT_DELAY);
         player.setTurn(2);
         oppo.setTurn(1);
     }
@@ -119,14 +164,16 @@ void flipCoin(Team& player, Team& oppo) {
 
 // 發球模擬，返回比賽是否繼續
 bool serve(Team& serveSide, Team& oppoSide, bool playing) {
-    cout << "========== 發球階段 ==========" << endl;
+    cout << "\n========== 發球階段 ==========" << endl;
     int serveMethodNum = 0;
     if (serveSide.getIsPlayerTeam()) {
-        cout << "[DEBUG] 現在是玩家隊伍的發球回合" << endl;
+        cout << "現在是玩家隊伍的發球回合" << endl;
+        delay_ms(TEXT_DELAY);
         serveMethodNum = chooseServeMethod();
         serveSide.setAttackAim(chooseAim());
     } else {
-        cout << "[DEBUG] 現在是對手隊伍的發球回合" << endl;
+        cout << "現在是對手隊伍的發球回合" << endl;
+        delay_ms(TEXT_DELAY);
         serveMethodNum = rand() % 4 + 1;
         serveSide.setAttackAim(rand() % 2 + 1);
     }
@@ -138,7 +185,7 @@ bool serve(Team& serveSide, Team& oppoSide, bool playing) {
 int chooseServeMethod() {
     int serveMethodNum = 0;
     cout << "你想要用哪種方式發球呢？\n";
-    cout << "(1) 大力跳發 (2) 跳飄 (3) 高手發球 (4) 低手發球\n";
+    cout << "(1) 大力跳發 (2) 跳飄 (3) 高手發球 (4) 低手發球\n>>";
     try {
         cin >> serveMethodNum;
         if (serveMethodNum < 1 || serveMethodNum > 4) {
@@ -150,15 +197,16 @@ int chooseServeMethod() {
         cin.ignore(INT_MAX, '\n');
         return chooseServeMethod();
     }
-    cout << "[DEBUG] 選擇的發球方式: " << serveMethodNum << endl;
+    cout << "選擇的發球方式: " << serveMethodNum << endl;
+    delay_ms(TEXT_DELAY);
     return serveMethodNum;
 }
 
 void chooseFront(Team& t) {
-    cout << "========== 防守分配階段 ==========" << endl;
+    cout << "\n========== 防守分配階段 ==========" << endl;
     if (t.getIsPlayerTeam()) {
         int frontPlayer;
-        cout << "你要讓誰站在前場防守？(1: 玩家, 2: 隊友)\n";
+        cout << "你要讓誰站在前場防守？(1: 玩家, 2: 隊友)\n>>";
         try {
             cin >> frontPlayer;
             if (frontPlayer != 1 && frontPlayer != 2) {
@@ -170,25 +218,35 @@ void chooseFront(Team& t) {
             cin.ignore(INT_MAX, '\n');
             return chooseFront(t);
         }
-        cout << "[DEBUG] 玩家選擇 " << (frontPlayer == 1 ? "自己" : "隊友") << " 為前排" << endl;
+        cout << "玩家選擇 " << (frontPlayer == 1 ? "自己" : "隊友") << " 為前排" << endl;
         t.setFront(frontPlayer);
+        delay_ms(TEXT_DELAY);
     } else {
         int randomChoice = rand() % 2 + 1;
-        cout << "[DEBUG] 對手選擇 " << (randomChoice == 1 ? "玩家A" : "玩家B") << " 為前排" << endl;
+        cout << "對手選擇 " << (randomChoice == 1 ? "玩家A" : "玩家B") << " 為前排" << endl;
         t.setFront(randomChoice);
+        delay_ms(TEXT_DELAY);
     }
 }
 
 bool serveDamageCaculate(Team& serveSide, Team& oppoSide, int serveMethodNum, bool playing) {
-    cout << "[DEBUG] 發球方式: " << serveMethodNum << endl;
+    cout << "發球方式: " << serveMethodNum << endl;
     if (serveMethodNum == 1 && checkSuccess(30 + serveSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(40 + serveSide.backPlayer().getATK() * 1.5);
-    } else if (serveMethodNum == 2 && checkSuccess(50 + serveSide.backPlayer().getSKL())) {
+        cout << "暴力即是美學！球以飛快的速度來到對手場上！\n";
+        delay_ms(TEXT_DELAY);
+   } else if (serveMethodNum == 2 && checkSuccess(50 + serveSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(50 + serveSide.backPlayer().getSKL() * 1.1);
-    } else if (serveMethodNum == 3 && checkSuccess(80 + serveSide.backPlayer().getSKL())) {
+        cout << "場外爆出了一陣掌聲！球左搖右晃的往對手場上衝去！\n";
+        delay_ms(TEXT_DELAY);
+   } else if (serveMethodNum == 3 && checkSuccess(80 + serveSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(25 + serveSide.backPlayer().getSKL() * 0.5);
-    } else if (serveMethodNum == 4 && checkSuccess(99)) {
+        cout << "漂亮的高手發球！\n";
+        delay_ms(TEXT_DELAY);
+   } else if (serveMethodNum == 4 && checkSuccess(99)) {
         oppoSide.setReceiveDifficulity(15 + serveSide.backPlayer().getSKL() * 0.3);
+        cout << "不求有功，但求無過～穩穩的低手發球！\n";
+        delay_ms(TEXT_DELAY);
     } else {
         if(serveSide.getIsPlayerTeam()) cout << "發球失誤！對方得分QAQ\n";
         if(!serveSide.getIsPlayerTeam()) cout << "對方發球失誤！你們得分啦～\n";
@@ -197,48 +255,58 @@ bool serveDamageCaculate(Team& serveSide, Team& oppoSide, int serveMethodNum, bo
         serveSide.setTurn(2); //己方接球
         playing = false;
     }
+    delay_ms(TEXT_DELAY);
     return playing;
 }
 
 bool receive(Team& receiveSide, Team& oppoSide, bool playing) {
-    cout << "========== 接球階段 ==========" << endl;
+    cout << "\n========== 接球階段 ==========" << endl;
+    delay_ms(TEXT_DELAY);
     chooseFront(receiveSide);
     if (oppoSide.getAttackAim() == 1) {
+        cout << "球飛到了前場！\n";
+        delay_ms(TEXT_DELAY);
         playing = checkSuccess(receiveSide.frontPlayer().getDEF() * 1.5 + receiveSide.frontPlayer().getSPD() - receiveSide.getReceiveDifficulity());
     } else {
+        cout << "球飛到了後場！\n";
+        delay_ms(TEXT_DELAY);
         playing = checkSuccess(receiveSide.backPlayer().getDEF() * 1.5 + receiveSide.backPlayer().getSPD() - receiveSide.getReceiveDifficulity());
     }
     if(receiveSide.getIsPlayerTeam()){
         if (playing) {
-            cout << "[DEBUG] 你成功接到球了！\n";
+            cout << "你成功接到球了！\n";
             receiveSide.setTurn(3); //攻擊
             oppoSide.setTurn(2);//對手接球
+            delay_ms(TEXT_DELAY);
             return playing;
         } else {
             cout << "沒有接到球QAQ\n對方得分！\n";
             oppoSide.addPoint();
             receiveSide.setTurn(2); //接球
             oppoSide.setTurn(1);//對手發球
+            delay_ms(TEXT_DELAY);
             return playing;
         }
     }else{
         if (playing) {
-            cout << "[DEBUG] 對手成功接到球了！\n";
+            cout << "對手成功接到球了～\n";
             receiveSide.setTurn(3); //攻擊
             oppoSide.setTurn(2); //對手接球
+            delay_ms(TEXT_DELAY);
             return playing;
         } else {
             cout << "對手沒有接到球QAQ\n你成功得分！\n";
             oppoSide.addPoint();
             receiveSide.setTurn(2); //接球
             oppoSide.setTurn(1); //對手發球
+            delay_ms(TEXT_DELAY);
             return playing;
         }
     }
 }
 
 bool attack(Team& attackSide, Team& oppoSide, bool playing) {
-    cout << "========== 攻擊階段 ==========" << endl;
+    cout << "\n========== 攻擊階段 ==========" << endl;
     int attackMethod = 0;
     if(attackSide.getIsPlayerTeam()){
         attackMethod = chooseAttackMethod();
@@ -257,14 +325,16 @@ bool attack(Team& attackSide, Team& oppoSide, bool playing) {
 }
 
 bool setBall(Team& attackSide, Team& oppoSide, bool playing){
-    cout << "========== 舉球階段 ==========" << endl;
+    cout << "\n========== 舉球階段 ==========" << endl;
     playing = checkSuccess(attackSide.frontPlayer().getSPD()*0.2+attackSide.frontPlayer().getSKL()*0.8+70);
     if(attackSide.getIsPlayerTeam()){
         if(playing){
             cout << "你的舉球非常漂亮的畫了一到弧線！\n";
+            delay_ms(TEXT_DELAY);
             return playing;
         }else{
             cout << "舉球時，手滑掉了？？？\n對手獲得一分！\n";
+            delay_ms(TEXT_DELAY);
             oppoSide.addPoint();
             oppoSide.setTurn(1);
             attackSide.setTurn(2);
@@ -273,9 +343,11 @@ bool setBall(Team& attackSide, Team& oppoSide, bool playing){
     }else{
          if(playing){
             cout << "對方舉球成功！\n";
+            delay_ms(TEXT_DELAY);
             return playing;
         }else{
             cout << "對方舉球時只顧著看你的絕世容顏\n球掉到地上，你獲得一分！\n";
+            delay_ms(TEXT_DELAY);
             oppoSide.addPoint();
             oppoSide.setTurn(1);
             attackSide.setTurn(2);
@@ -287,7 +359,7 @@ bool setBall(Team& attackSide, Team& oppoSide, bool playing){
 int chooseAttackMethod(){
     int attackMethodNum = 0;
     cout << "你想要用哪種方式攻擊呢？\n";
-    cout << "(1) 強力扣殺 (2) 吊球 (3) 快攻 (4) 平地回擊\n";
+    cout << "(1) 強力扣殺 (2) 吊球 (3) 快攻 (4) 平地回擊\n>>";
     try {
         cin >> attackMethodNum;
         if (attackMethodNum < 1 || attackMethodNum > 4) {
@@ -299,14 +371,15 @@ int chooseAttackMethod(){
         cin.ignore(INT_MAX, '\n');
         return chooseAttackMethod();
     }
-    cout << "[DEBUG] 選擇的攻擊方式: " << attackMethodNum << endl;
+    cout << "選擇的攻擊方式: " << attackMethodNum << endl;
+    delay_ms(TEXT_DELAY);
     return attackMethodNum;
 }
 int chooseAim(){
-    cout << "========== 選擇攻擊目標階段 ==========" << endl;
+    cout << "\n========== 選擇攻擊目標階段 ==========" << endl;
     int attackAimNum = 0;
     cout << "你想要把球打到對方場上的哪個地方呢？\n";
-    cout << "(1) 前場 (2) 後場\n";
+    cout << "(1) 前場 (2) 後場\n>>";
     try {
         cin >> attackAimNum;
         if (attackAimNum < 1 || attackAimNum > 2) {
@@ -318,22 +391,34 @@ int chooseAim(){
         cin.ignore(INT_MAX, '\n');
         return chooseAim();
     }
-    cout << "[DEBUG] 選擇的攻擊位置: " << attackAimNum << endl;
+    cout << "選擇的攻擊位置: " << attackAimNum << endl;
+    delay_ms(TEXT_DELAY);
     return attackAimNum;
 }
+
 bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum, bool playing) {
-    cout << "[DEBUG] 攻擊方式: " << attackMethodNum << endl;
+    cout << "攻擊方式: " << attackMethodNum << endl;
     if (attackMethodNum == 1 && checkSuccess(40 + attackSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(attackSide.backPlayer().getSKL() * 0.2 + attackSide.backPlayer().getATK() * 1);
-    } else if (attackMethodNum == 2 && checkSuccess(50 + attackSide.backPlayer().getSKL())) {
+        cout << "球來就是要爆扣！用力量來壓制對手！\n";
+        delay_ms(TEXT_DELAY);
+   } else if (attackMethodNum == 2 && checkSuccess(50 + attackSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(20 + attackSide.backPlayer().getSKL() * 0.8);
-    } else if (attackMethodNum == 3 && checkSuccess(40 + attackSide.backPlayer().getSKL())) {
+        cout << "看準對方的空檔！用吊球來迷惑對手～\n";
+        delay_ms(TEXT_DELAY);
+   } else if (attackMethodNum == 3 && checkSuccess(40 + attackSide.backPlayer().getSKL())) {
         oppoSide.setReceiveDifficulity(attackSide.backPlayer().getATK() * 0.6 + attackSide.backPlayer().getSKL() * 0.4 + attackSide.backPlayer().getSPD() * 0.5);
-    } else if (attackMethodNum == 4 && checkSuccess(99)) {
+        cout << "迅！快！猛！用出其不意的快攻來取分！\n";
+        delay_ms(TEXT_DELAY);
+   } else if (attackMethodNum == 4 && checkSuccess(99)) {
         oppoSide.setReceiveDifficulity(20 + attackSide.backPlayer().getSKL() * 0.1);
-    } else {
+        cout << "穩穩地把球打過去才是王道！球往隊手場上了飛過去～\n";
+        delay_ms(TEXT_DELAY);
+   } else {
+        delay_ms(TEXT_DELAY);
         if(attackSide.getIsPlayerTeam()) cout << "攻擊失誤！對方得分QAQ\n";
         if(!attackSide.getIsPlayerTeam()) cout << "對方攻擊失誤！你們得分啦～\n";
+        delay_ms(TEXT_DELAY);
         oppoSide.addPoint();
         oppoSide.setTurn(1); //換對方發球
         attackSide.setTurn(2); //己方接球
