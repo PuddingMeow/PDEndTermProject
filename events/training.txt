@@ -185,4 +185,6 @@ MNY
 
 endBranch
 
+endChoice
+
 endEvent
