@@ -74,7 +74,7 @@ int main(){
             dayEnd(dayCnt, player);//執行結束處理
         }*/
     }
-    
+
     return 0;
 }
 
