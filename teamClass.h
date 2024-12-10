@@ -4,6 +4,7 @@ using namespace std;
 
 class Team {
 private:
+    string teamName;          // 團隊名稱
     int score;                // 團隊的分數
     bool isPlayerTeam;        // 是否是玩家的隊伍
     MainCharacter A;          // 玩家 A
@@ -15,7 +16,8 @@ private:
                    
 public:
     // 建構子：初始化隊伍
-    Team(MainCharacter& playerA, MainCharacter& playerB, bool isPlayer){
+    Team(MainCharacter& playerA, MainCharacter& playerB, bool isPlayer, string teamName){
+        this->teamName = teamName;
         this->score = 0;
         this->isPlayerTeam = isPlayer;
         this->A = playerA;
@@ -50,6 +52,10 @@ public:
         receiveDifficulity = t.receiveDifficulity;
         attackAim = t.attackAim;
         return *this;
+    }
+    // 取得團隊名稱
+    string getTeamName() const {
+        return teamName;
     }
 
     // 取得分數
