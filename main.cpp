@@ -2,6 +2,7 @@
 #include "MainCharacter.h"
 #include "flagArrayClass.h"
 #include "saveFileClass.h"
+#include "eventFunction.h"
 using namespace std;
 /* what we should have
 主要事項：
@@ -49,10 +50,6 @@ void mainMenu(MainCharacter& player, FlagArray& flags);
 bool createNewSave(MainCharacter& player, FlagArray& flags);
 bool loadSave(MainCharacter& player, FlagArray& flags);
 void printSaveList();
-
-// output delay function
-const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(500);
-void delay_ms(std::chrono::milliseconds);
 
 int main(){
     int dayCnt = 1; //現在的天數
@@ -281,19 +278,4 @@ void printSaveList() {
         std::cout << temp_save.getPlayer().getName() << " 第" << temp_save.getDayCnt() << "天" << '\n';
     }
     return;
-}
-
-void delay_ms(std::chrono::milliseconds ms){
-	using namespace std::chrono;
-
-	time_point<steady_clock> start = steady_clock::now();
-	while(true){
-		time_point<steady_clock> now = steady_clock::now();
-		milliseconds duration = duration_cast<milliseconds>(now - start);
-		if(duration >= ms){
-			break;
-		}
-	}
-
-	return;
 }
