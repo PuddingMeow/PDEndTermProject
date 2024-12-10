@@ -32,6 +32,7 @@ int main(){
 
         mainMenu(save);
 
+        bool winState = false;
         while(dayCnt <= finalDay){
             dayStart(dayCnt);
 
@@ -39,7 +40,17 @@ int main(){
                 choosePartner(save);
 
                 MainCharacter player = save.getPlayer();
-                //bool winState = battleSimulation(player, , , );
+                MainCharacter partner;
+                if(player.listPartner() == "no_partner"){
+                    std::cout << "＞＞直到比賽前都沒有找到隊友，只好棄賽了。。。\n";
+                    ++dayCnt;
+                    break;
+                }else if(player.listPartner() == "小傑"){
+                    partner = partner1;
+                }else{
+                    partner = partner2;
+                }
+                winState = battleSimulation(player, partner, opponent1, opponent2);
                 nextBattleDay += 6;
             }else{
                 daySimulation(dayCnt, save);
@@ -54,6 +65,15 @@ int main(){
                 std::cout << "＞＞返回游戲主頁。" << '\n';
                 break;
             }
+        }
+
+        if(dayCnt > finalDay){
+            if(winState){
+                std::cout << "＞＞贏啦！你真棒！\n";
+            }else{
+                std::cout << "＞＞輸啦！再接再厲！\n";
+            }
+            std::cout << "＞＞感謝游玩！\\(^W^)/\n";
         }
     }
 
@@ -298,19 +318,14 @@ void choosePartner(SaveFile& save) {
     std::vector<MainCharacter> partnerList;
     
     // perform checks for partner A
-    bool partner1_recruited = true;
-
-    if(partner1_recruited){
+    if(flags.checkFlagStatus("recruit_xiaojie") == true){
         partnerList.push_back(partner1);
     }
 
     // perform checks for partner B
-    bool partner2_recruited = true;
-
-    if(partner2_recruited){
+    if(flags.checkFlagStatus("recruit_changi") == true){
         partnerList.push_back(partner2);
     }
-
 
     if(partnerList.size() == 0){
         return;
@@ -336,6 +351,7 @@ void choosePartner(SaveFile& save) {
             }
         }catch(std::invalid_argument& e){
             std::cout << "＞＞請輸入有效數字！數字就好，括號不用～\n";
+            continue;
         }catch(std::out_of_range& e){
             std::cout << "＞＞請輸入有效數字！選擇：（";
             std::cout << "1";
@@ -343,12 +359,14 @@ void choosePartner(SaveFile& save) {
                 std::cout << "," << i + 1;
             }
             std::cout << "）\n";
+            continue;
         }
     
         --player_choice;
 
         player.setPartner(partnerList[player_choice].getName());
         std::cout << "＞＞你選擇的隊友是" << player.listPartner() << "！請在比賽中一起好好加油吧～！\n";
+        break;
     }
 
     // update save.

@@ -1,5 +1,4 @@
 【出門閒晃】
-
 sysMsg
 player什麼事都不想做
 

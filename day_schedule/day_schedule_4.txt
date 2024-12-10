@@ -12,9 +12,9 @@ working.txt
 打工
 辛辛勤勤打工工，老老實實賺錢錢。
 option
-event2.txt
+wandering.txt
 隨便走走
-説不定會遇見誰呢．．．？
+虛度光陰。這樣真的好嗎...？
 endAction
 
 action
@@ -31,9 +31,9 @@ working.txt
 打工
 辛辛勤勤打工工，老老實實賺錢錢。
 option
-event2.txt
+wandering.txt
 隨便走走
-説不定會遇見誰呢．．．？
+虛度光陰。這樣真的好嗎...？
 endAction
 
 action
@@ -50,9 +50,9 @@ working.txt
 打工
 辛辛勤勤打工工，老老實實賺錢錢。
 option
-event2.txt
+wandering.txt
 隨便走走
-説不定會遇見誰呢．．．？
+虛度光陰。這樣真的好嗎...？
 endAction
 
 endDay
