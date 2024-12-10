@@ -16,6 +16,11 @@ void dayStart(int dayCnt);
 void dayEnd(int& dayCnt, MainCharacter player);
 
 void choosePartner(SaveFile& save);
+MainCharacter opponent1("長尾高袋鼠", 10, 30, 10, 0, 0, 5, 300, "很帥的學長");
+MainCharacter opponent2("很帥的學長", 30, 30, 40, 0, 0, 40, 300, "長尾高袋鼠");
+MainCharacter partner1("小傑", 20, 20, 20, 0, 0, 20, 300, "");
+MainCharacter partner2("嚐溢", 50, 5, 10, 0, 0, 40, 300, "");
+
 
 int main(){
     int dayCnt = 1; //現在的天數
@@ -297,14 +302,14 @@ void choosePartner(SaveFile& save) {
     bool partner1_recruited = true;
 
     if(partner1_recruited){
-        partnerList.push_back(/*partner A*/);
+        partnerList.push_back(partner1);
     }
 
     // perform checks for partner B
     bool partner2_recruited = true;
 
     if(partner2_recruited){
-        partnerList.push_back(/*partner B*/);
+        partnerList.push_back(partner2);
     }
 
 
