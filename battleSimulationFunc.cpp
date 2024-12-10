@@ -169,7 +169,7 @@ int main() {
 
 bool checkSuccess(int a) {
     int dice = rand() % 100+1;
-    cout << "[DEBUG] 擲骰子點數: " << dice << " (成功機率: " << a << "%)" << endl;
+//    cout << "[DEBUG] 擲骰子點數: " << dice << " (成功機率: " << a << "%)" << endl;
     delay_ms(TEXT_DELAY);
     return dice < a;
 }
@@ -374,7 +374,7 @@ bool setBall(Team& attackSide, Team& oppoSide, bool playing){
     playing = checkSuccess(attackSide.frontPlayer().getSPD()*0.2+attackSide.frontPlayer().getSKL()*0.8+70);
     if(attackSide.getIsPlayerTeam()){
         if(playing){
-            cout << "你的舉球非常漂亮的畫了一到弧線！\n";
+            cout << "你的舉球非常漂亮的畫了一道弧線！\n";
             delay_ms(TEXT_DELAY);
             return playing;
         }else{
