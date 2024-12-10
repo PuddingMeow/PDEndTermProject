@@ -39,6 +39,9 @@ player
 sysMsg
 雖然訓練很辛苦，但player還是咬牙撐過去了！
 
+sysMsg
+攻擊力+1
+
 statChange
 ATK
 1
@@ -69,6 +72,9 @@ player
 sysMsg
 雖然訓練很辛苦，但player還是咬牙撐過去了！
 
+sysMsg
+防禦力+1
+
 statChange
 DEF
 1
@@ -98,6 +104,9 @@ player
 
 sysMsg
 雖然訓練很辛苦，但player還是咬牙撐過去了！
+
+sysMsg
+速度+1
 
 statChange
 SPD
@@ -133,6 +142,9 @@ player
 sysMsg
 雖然訓練很辛苦，但player還是咬牙撐過去了！
 
+sysMsg
+精力+1
+
 statChange
 SPLIMIT
 1
@@ -159,6 +171,9 @@ sysMsg
 
 sysMsg
 雖然訓練很辛苦，但player還是咬牙撐過去了！
+
+sysMsg
+技巧+1
 
 statChange
 SKL
