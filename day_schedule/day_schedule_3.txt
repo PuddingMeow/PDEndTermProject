@@ -1,5 +1,5 @@
 event
-day1.txt
+day3.txt
 
 action
 option
@@ -58,7 +58,11 @@ event2.txt
 説不定會遇見誰呢．．．？
 endAction
 
+gatedEvent
+flag
+changi_1
+1
 event
-A.txt
+B.txt
 
 endDay

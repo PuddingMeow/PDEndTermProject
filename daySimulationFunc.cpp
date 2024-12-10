@@ -475,6 +475,7 @@ void daySimulation(int dayCnt, SaveFile& save) {
 
     // update save data.
     save.update(dayCnt, player, flags);
+    save.exportTo();
     std::cout << "＞＞存檔已更新。";
 
     file.close();

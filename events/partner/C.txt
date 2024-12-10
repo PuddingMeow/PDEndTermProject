@@ -1,40 +1,41 @@
 【遇見學長 - 3/3】(有觸發過2劇情且答對題目，一樣不在同一天，並且出去閒晃時)
 
 sysMsg
-player 選擇出去閒晃...逛到了附近公園
+player選擇出去閒晃...逛到了附近公園
 
 sysMsg
 沒想到他又又又遇到了嚐溢學長...
 
-dialouge
+dialogue
 player
 ( 這次我要主動出擊！！)
 
-dialouge
+dialogue
 player
 「嚐溢學長，你願意跟我一起組隊參加排球賽嗎？」
 
-dialouge
+dialogue
 嚐溢
 「幹嘛啦，搞得像是求婚一樣，
 
-dialouge
+dialogue
 嚐溢
 先聲明，我可不是9@y
 
-dialouge
+dialogue
 嚐溢
 但...看在你這幾天的表現上...
 
-dialouge
+dialogue
 嚐溢
 我願意！」
 
-dialouge
+dialogue
 player
 「水啦！！」
 
-(將嚐溢加入隊伍)
+flag
+recruit_changi 1
 
 sysMsg
 技巧+1

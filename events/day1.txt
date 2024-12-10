@@ -5,7 +5,7 @@ sysMsg
 sysMsg
 但是…player下禮拜就要比賽了，而且他連個像樣的隊友都沒有！
 
-dialouge
+dialogue
 player
 「嗯…找隊友的話...隨緣就好！」
 
@@ -22,7 +22,7 @@ choice
 
 branch 0
 
-dialouge
+dialogue
 player
 「痾痾痾...我也不知道ㄟ」
 
@@ -42,7 +42,7 @@ statChange
 SKL
 1
 
-dialouge
+dialogue
 player
 「我什麼時候被植入了數值條？！」
 
@@ -61,7 +61,7 @@ sysMsg
 sysMsg
 好啦，要是沒有其他問題的話我要先走... ( 消失 ) 
 
-dialouge
+dialogue
 player
 「他還是沒有回答到我的問題啊...」
 
@@ -69,7 +69,7 @@ endBranch
 
 branch 1
 
-dialouge
+dialogue
 player
 「這是我們之間的秘密喔~」
 
@@ -97,7 +97,7 @@ sysMsg
 sysMsg
 真是的，這年頭連旁白也要學會怎麼保護自己了嗎...( 消失 )
 
-dialouge
+dialogue
 player
 「我是說錯什麼話了嗎？」
 

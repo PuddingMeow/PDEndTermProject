@@ -1,14 +1,13 @@
 【社畜工作日】
-
-dialouge
+dialogue
 player
 「緩光臨，尖幾位呢~」
 
-dialouge
+dialogue
 player
 「報思幫嗯上菜喔~」
 
-dialouge
+dialogue
 player
 「寫光您~」
 

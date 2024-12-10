@@ -1,5 +1,7 @@
-4
-trainingWholeDay
-recruitXiaoJie_1
-recruitXiaoJie_2
-test_flag
+5
+firstTraining
+changi_1
+changi_2
+changi_happy
+recruit_changi
+recruit_xiaoJie

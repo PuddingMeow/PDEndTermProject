@@ -1,82 +1,85 @@
-【遇見學長 - 1/3】(第一次選工作選項，劇情結束之後會接著工作)
+【遇見學長 - 1/3】
 
-dialouge
+dialogue
 player
 「如果不去打個工，
 
-dialouge
+dialogue
 player
 我就沒錢去健身中心了...」
 
-dialouge
+dialogue
 player
 「啊，我們家附近好像有新開一家火鍋店，
 
-dialouge
+dialogue
 player
 他們應該滿缺人的，去看看吧！」
 
 sysMsg
 到了火鍋店後...
 
-dialouge
+dialogue
 老闆
 「緩光臨，尖幾位呢？」
 
-dialouge
+dialogue
 player
 「等等...這不是嚐溢學長嗎？
 
-dialouge
+dialogue
 player
 你怎麼畢業後開起火鍋店來啦？」
 
-dialouge
+dialogue
 回憶
 嚐溢學長在大學時期曾經是系上排球隊最強大砲呢
 
-dialouge
+dialogue
 嚐溢
 「呦，這不是player學弟嗎，
 
-dialouge
+dialogue
 嚐溢
 開火鍋店是我本來就有的夢想啦！
 
-dialouge
+dialogue
 嚐溢
 況且資管系出路這麼廣
 
-dialouge
+dialogue
 嚐溢
 加個火鍋店進來應該也不奇怪吧」
 
-dialouge
+dialogue
 player
 「那你的店現在有缺人嗎？」
 
-dialouge
+dialogue
 嚐溢
 「你想來我的店工作嗎，當然好啊！
 
-dialouge
+dialogue
 嚐溢
 看在你是我的好學弟的分上，
 
-dialouge
+dialogue
 嚐溢
 待遇自然是不會差的，
 
-dialouge
+dialogue
 嚐溢
 你來工作一次，我就給你400塊！」
 
-dialouge
+dialogue
 player
 「哇！謝謝學長！」
 
-dialouge
+dialogue
 player
 ( 如果能讓學長組隊跟我打比賽就更好了... )
+
+flag
+changi_1 1
 
 endEvent

@@ -39,7 +39,6 @@ int main(){
             }else{
                 daySimulation(dayCnt, save);
             }
-            ++dayCnt;
 
             dayEnd(dayCnt, save.getPlayer());
 
@@ -297,14 +296,14 @@ void choosePartner(SaveFile& save) {
     bool partner1_recruited = true;
 
     if(partner1_recruited){
-        partnerList.push_back(/*partner A*/);
+        //partnerList.push_back(/*partner A*/);
     }
 
     // perform checks for partner B
     bool partner2_recruited = true;
 
     if(partner2_recruited){
-        partnerList.push_back(/*partner B*/);
+        //partnerList.push_back(/*partner B*/);
     }
 
 

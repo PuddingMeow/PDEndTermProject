@@ -12,14 +12,14 @@ choice
 
 branch 0
 
-dialouge
+dialogue
 player
 「確實呢，突然有點想念他了...」
 
 sysMsg
 surprise！！我又出現了喔！！
 
-dialouge
+dialogue
 player
 「你這兩天都去哪了啊，太久沒聽到你的聲音了」
 
@@ -27,7 +27,7 @@ endBranch
 
 branch 1
 
-dialouge
+dialogue
 player
 「那剛剛冒出的那兩句話是怎麼回事！！」
 
@@ -47,7 +47,7 @@ statChange
 SPD
 1
 
-dialouge
+dialogue
 player
 「...我就先不吐槽為什麼是加在速度了...」
 
@@ -55,7 +55,7 @@ endBranch
 
 endChoice
 
-dialouge
+dialogue
 player
 「...話說，你這次出現又是為了嘲笑我還沒有隊友嗎？...」
 
@@ -83,11 +83,11 @@ sysMsg
 sysMsg
 但擋不住眼鏡底下那俊秀的臉龐...
 
-dialouge
+dialogue
 player
 「你可以閉嘴了嗎？我已經知道是小傑了，
 
-dialouge
+dialogue
 player
 而且人家都走到我面前了還一直講講講，你這個人很皮欸！」
 
@@ -133,8 +133,6 @@ dialogue
 sysMsg
 這不就是你正要參加的比賽嗎？
 
-( 出現小傑的各項數據 )
-
 dialogue
 player
 「不是為什麼小傑的旁邊會出現跟我一樣的數值條啊？
@@ -151,7 +149,7 @@ player
 「不要學我的招式啊喂！」
 
 sysMsg
-看起來寫小傑是位全能型選手呢，
+看起來小傑是位全能型選手呢，
 
 sysMsg
 他沒有某一項數值是特別高的
@@ -161,9 +159,6 @@ sysMsg
 
 sysMsg
 你要和小傑組隊嗎?
-
-sysMsg
-你只要確定和他組隊後，就不可以再換隊友囉！
 
 sysMsg
 請好好考慮...
@@ -202,7 +197,8 @@ statChange
 DEF
 1
 
-( 把小傑加入隊伍 )
+flag
+recruit_xiaojie 1
 
 endBranch
 

@@ -1,25 +1,25 @@
 【遇見學長 - 2/3】(有觸發過1劇情而且不在同一天，而且在訓練完之後)
 
-dialouge
+dialogue
 player
 「今天也順利完成訓練啦！」
 
-dialouge
+dialogue
 player
 「...欸...那邊那個在做硬舉的，不是嚐溢學長嗎？」
 
 sysMsg
 player跑過去找嚐溢學長
 
-dialouge
+dialogue
 嚐溢
 「player學弟，又遇到你啦，
 
-dialouge
+dialogue
 嚐溢
 看你剛健身完，我來考考你...」
 
-dialouge
+dialogue
 嚐溢
 「我現在做的這個訓練，可以增加我打排球時哪方面的強度？」
 
@@ -31,11 +31,11 @@ choice
 
 branch 0
 
-dialouge
+dialogue
 嚐溢
 「聽起來是真的有在訓練喔，
 
-dialouge
+dialogue
 嚐溢
 我題目是不是出得太簡單啦！」
 
@@ -49,22 +49,25 @@ statChange
 ATK
 1
 
-dialouge
+dialogue
 player
 ( 感覺邀請他與我組隊比賽真的滿有機會的，下次一定要把握！)
+
+flag
+changi_happy 1
 
 endBranch
 
 branch 1
 
-dialouge
+dialogue
 嚐溢
 「你竟然答錯了，太菜了！」
 
 sysMsg
 學長離開健身中心
 
-dialouge
+dialogue
 player
 ( 哭啊，看來我還是沒資格跟學長組隊打比賽 )
 
@@ -72,19 +75,22 @@ endBranch
 
 branch 2
 
-dialouge
+dialogue
 嚐溢
 「你竟然答錯了，太菜了！」
 
 sysMsg
 學長離開健身中心
 
-dialouge
+dialogue
 player
 ( 哭啊，看來我還是沒資格跟學長組隊打比賽 )
 
 endBranch
 
 endChoice
+
+flag
+changi_2 1
 
 endEvent

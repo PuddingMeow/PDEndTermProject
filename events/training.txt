@@ -1,15 +1,7 @@
-選訓練時檢查
-（檢查如果錢小於200）
-
-sysMsg
-你目前的錢錢數量連一項訓練都負擔不起啊！還是去工作賺點錢再說吧！
-
-（如果錢大於等於200）
-
 【體能訓練】
-dialouge
+dialogue
 管掌
-「Player,歡迎來到橙桔撕漢健身中心！本健身中心的每項訓練都是均一價200元，你今天想來點什麼樣的訓練組合呢？」
+「player，歡迎來到橙桔撕漢健身中心！本健身中心的每項訓練都是均一價200元，你今天想來點什麼樣的訓練組合呢？」
 
 choice
 5
@@ -20,19 +12,20 @@ choice
 室內排球場 ( 強化技術 )
 
 branch 0
-dialouge
+
+dialogue
 管掌
 「啊你選了硬舉啊！那祝你訓練順利啦！」
 
-dialouge
+dialogue
 player
 嘿咻~
 
-dialouge
+dialogue
 player
 嘿咻~
 
-dialouge
+dialogue
 player
 嘿咻~
 
@@ -53,19 +46,20 @@ MNY
 endBranch
 
 branch 1
-dialouge
+
+dialogue
 管掌
 啊你選了深蹲啊！那祝你訓練順利啦！
 
-dialouge
+dialogue
 player
 喝~
 
-dialouge
+dialogue
 player
 喝~
 
-dialouge
+dialogue
 player
 哈~
 
@@ -86,19 +80,20 @@ MNY
 endBranch
 
 branch 2
-dialouge
+
+dialogue
 管掌
 啊你選了快速抬腿啊！那祝你訓練順利啦！
 
-dialouge
+dialogue
 player
 嘿咻~
 
-dialouge
+dialogue
 player
 嘿咻~
 
-dialouge
+dialogue
 player
 嘿咻~
 
@@ -119,23 +114,24 @@ MNY
 endBranch
 
 branch 3
-dialouge
+
+dialogue
 管掌
 啊你選了跑步機啊！那祝你訓練順利啦！
 
-dialouge
+dialogue
 player
 哼~
 
-dialouge
+dialogue
 player
 哼~
 
-dialouge
+dialogue
 player
 哼~
 
-dialouge
+dialogue
 player
 啊啊啊啊啊啊啊~
 
@@ -156,7 +152,8 @@ MNY
 endBranch
 
 branch 4
-dialouge
+
+dialogue
 管掌
 啊你選了室內排球場啊！那祝你訓練順利啦！
 
