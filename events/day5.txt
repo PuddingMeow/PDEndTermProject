@@ -52,8 +52,16 @@ dialogue
 sysMsg
 你們又是誰？！
 
+dialogue
+player
 「現在有四個聲音在我腦海裡，
+
+dialogue
+player
 而我竟然一點都不驚訝，
+
+dialogue
+player
 看來我是徹底的瘋了...
 
 sysMsg
@@ -77,8 +85,12 @@ statChange
 SPLIMIT
 1
 
+dialogue
+player
 哇！我感覺我沒那麼緊張了
 
+dialogue
+player
 精神勝利法萬歲！
 
 endBranch
