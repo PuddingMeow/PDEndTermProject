@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include "eventFunction.h"
 #include "teamClass.h"
 #include "battleSimulationFunc.h"
 
@@ -165,21 +166,6 @@ int main() {
 }
 */
 
-
-void delay_ms(std::chrono::milliseconds ms){
-	using namespace std::chrono;
-
-	time_point<steady_clock> start = steady_clock::now();
-	while(true){
-		time_point<steady_clock> now = steady_clock::now();
-		milliseconds duration = duration_cast<milliseconds>(now - start);
-		if(duration >= ms){
-			break;
-		}
-	}
-
-	return;
-}
 
 bool checkSuccess(int a) {
     int dice = rand() % 100+1;
