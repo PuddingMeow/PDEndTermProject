@@ -66,7 +66,7 @@ int main() {
     Team opponent(A, B, false, "我是超強的對手啦哈哈");
     Team playerTeam(player, C, true, playerTeamName);
     
-    cout << "==========比賽開始！==========\n";
+    cout << "\n==========比賽開始！==========\n";
     cout << "由 " << playerTeam.getTeamName() << " 對上 " << opponent.getTeamName() << " ！\n";
     int endScore = 15;
     cout << "當分數到達 " << endScore << " 分時遊戲結束！\n";

@@ -46,8 +46,8 @@ void dayEnd(int& dayCnt, MainCharacter player){
 int main(){
     MainCharacter player; //主角
     int dayCnt = 1; //現在的天數
-    int battleDay = {7, 14 ... finalDay}; //數值隨便寫的，要比賽的日子
-    int finalDay = 28; //數值我歲便寫的2，最後一天
+    int battleDay = {7, finalDay}; //數值隨便寫的，要比賽的日子
+    int finalDay = 14; //數值我歲便寫的2，最後一天
     while(dayCnt <= finalDay){
         if(dayCnt in battleDay){
             battleSimulation();//希望我們寫的到
