@@ -1,0 +1,14 @@
+【day1_scene1】
+dialogue
+player
+這是第一天第一幕。
+
+dialogue
+player
+我不太確定劇情可以怎麽寫。好像也沒時間想。
+
+dialogue
+player
+嗚嗚嗚嗚嗚。
+
+endEvent

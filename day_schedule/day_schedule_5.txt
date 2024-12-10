@@ -1,3 +1,6 @@
+event
+day5.txt
+
 action
 option
 training.txt
