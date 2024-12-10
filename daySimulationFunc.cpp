@@ -1,12 +1,13 @@
+#include "daySimulationFunc.h"
+#include "eventFunction.h"
+#include "flagArrayClass.h"
+#include "saveFileClass.h"
+#include "MainCharacter.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include "eventFunction.h"
-#include "flagArrayClass.h"
-#include "saveFileClass.h"
-#include "MainCharacter.h"
 
 class TriggerCondition {
     protected:
@@ -85,14 +86,12 @@ class Menu {
         void print() const;
 };
 
-void daySimulation(int dayCnt, MainCharacter& player, FlagArray& flags);
-
-int main() {
+/*int main() {
     SaveFile save(1);
     MainCharacter player(save.getPlayer());
     FlagArray flags(save.getFlags());
 
-    /*player.addLUK(1987);
+    player.addLUK(1987);
 
     flags[0].status = true;
 
@@ -110,7 +109,7 @@ int main() {
 
     SaveFile newSave(1);
     newSave.importFrom(1);
-    newSave.print();*/
+    newSave.print();
 
     player.addMNY(2000);
 
@@ -123,9 +122,9 @@ int main() {
     menu.addTriggerCondition(1, "test_flag", true);
     menu.addTriggerCondition(1, "MNY", "-", 200);
 
-    menu.trigger(player, flags);*/
+    menu.trigger(player, flags);
 
-/*    Menu menu(2);
+    Menu menu(2);
     menu.addEventOption("Training Area", "Hone your skills!", "training_atk.txt");
     menu.addEventOption("Outside", "Leave the dorms!", "event1.txt");
 
@@ -137,10 +136,10 @@ int main() {
 
     SaveFile newSave(1);
     newSave.importFrom(1);
-    newSave.print();*/
+    newSave.print();
 
     return 0;
-}
+}*/
 
 // class: TriggerCondition
 TriggerCondition::TriggerCondition(std::string attribute)
@@ -344,7 +343,11 @@ void Menu::trigger(MainCharacter& player, FlagArray& flags) {
     return;
 }
 
-void daySimulation(int dayCnt, MainCharacter& player, FlagArray& flags) {
+void daySimulation(int dayCnt, SaveFile& save) {
+    // extract save data.
+    MainCharacter player = save.getPlayer();
+    FlagArray flags = save.getFlags();
+
     // import schedule file.
     std::string path = "day_schedule\\day_schedule_" + to_string(dayCnt) + ".txt";
     std::ifstream file(path);
@@ -467,6 +470,10 @@ void daySimulation(int dayCnt, MainCharacter& player, FlagArray& flags) {
 
         std::getline(file, input); // skip empty line.
     }
+
+    // update save data.
+    save.update(dayCnt, player, flags);
+    std::cout << "＞＞存檔已更新。";
 
     file.close();
     return;

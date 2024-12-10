@@ -4,60 +4,60 @@
 #include "saveFileClass.h"
 #include "eventFunction.h"
 #include "battleSimulationFunc.h"
+#include "daySimulationFunc.h"
 using namespace std;
 
-//每天開始的固定處理與輸出
-void dayStart(int dayCnt){ 
-    cout << "第" << dayCnt << "天\n";
-}
-
-//每天結束的固定處理與輸出
-void dayEnd(int& dayCnt, MainCharacter player){
-    cout << "第" << dayCnt << "天\n";
-    cout << "現在的各項數值\n";
-    cout << "攻擊力：" << player.getATK() << '\n';
-    cout << "防禦力：" << player.getDEF() << '\n';
-    cout << "敏捷度：" << player.getSPD() << '\n';
-    cout << "幸運值：" << player.getLUK() << '\n'; //感覺加了比較好玩
-    cout << "精力值上限：" << player.getSPLimit() << '\n';
-    cout << "錢包餘額：" << player.getMNY() << '\n';
-    cout << "你的隊友：" << player.listPartner() << '\n';
-    dayCnt ++;
-}
-
-void mainMenu(MainCharacter& player, FlagArray& flags);
-bool createNewSave(MainCharacter& player, FlagArray& flags);
-bool loadSave(MainCharacter& player, FlagArray& flags);
+void mainMenu(SaveFile& save);
+bool createNewSave(SaveFile& save);
+bool loadSave(SaveFile& save);
 void printSaveList();
+
+void dayStart(int dayCnt);
+void dayEnd(int& dayCnt, MainCharacter player);
 
 int main(){
     int dayCnt = 1; //現在的天數
-    int battleDay = 8; //數值隨便寫的，要比賽的日子
-    int finalDay = 8; //數值我歲便寫的2，最後一天
+    int nextBattleDay = 6;
+    int finalDay = 12; //數值我歲便寫的2，最後一天
 
     while(true){
-        MainCharacter player;
-        FlagArray flags;
+        SaveFile save(1);
 
-        mainMenu(player, flags);
+        mainMenu(save);
 
-        /*while(dayCnt <= finalDay){
-            if(dayCnt in battleDay){
-                battleSimulation();//希望我們寫的到
+        while(dayCnt <= finalDay){
+            dayStart(dayCnt);
+
+            if(dayCnt == nextBattleDay){
+                MainCharacter player = save.getPlayer();
+                //bool winState = battleSimulation(player, , , );
+                nextBattleDay += 6;
             }else{
-                daySimulation(); //包含event和dailyProgression //還有選項輸出等等
+                daySimulation(dayCnt, save);
             }
-            dayEnd(dayCnt, player);//執行結束處理
-        }*/
+            ++dayCnt;
+
+            dayEnd(dayCnt, save.getPlayer());
+
+            std::string raw_input = "";
+            std::cout << "＞＞要繼續游戲嗎？（Ｙ／Ｎ）：" << '\n';
+            std::getline(std::cin, raw_input);
+            if(raw_input != "Y"){
+                std::cout << "＞＞返回游戲主頁。" << '\n';
+                break;
+            }
+        }
     }
 
     return 0;
 }
 
-void mainMenu(MainCharacter& player, FlagArray& flags) {
+void mainMenu(SaveFile& save) {
+    MainCharacter player;
+    FlagArray flags;
     int player_choice = 0;
     while(true){
-        std::cout << "\n\n===== 排球青年 =====\n\n";
+        std::cout << "\n\n===== 排球訓練日記 =====\n\n";
         std::cout << "(1) 開始新游戲\n";
         std::cout << "(2) 讀取存檔\n";
         std::cout << "(3) 結束游戲\n";
@@ -88,10 +88,10 @@ void mainMenu(MainCharacter& player, FlagArray& flags) {
     bool action_success = false;
     switch(player_choice){
         case 1:
-            action_success = createNewSave(player, flags);
+            action_success = createNewSave(save);
             break;
         case 2:
-            action_success = loadSave(player, flags);
+            action_success = loadSave(save);
             break;
         case 3:
             std::cout << "謝謝游玩~~";
@@ -103,15 +103,17 @@ void mainMenu(MainCharacter& player, FlagArray& flags) {
             throw logic_error("invalid player_choice");
     }
 
-    // if action failed, return to main menu.
+    // if action failed, return to main menu. else, update save.
     if(action_success == false){
-        mainMenu(player, flags);
+        mainMenu(save);
+    }else{
+
     }
 
     return;
 }
 
-bool createNewSave(MainCharacter& player, FlagArray& flags){
+bool createNewSave(SaveFile& save){
     printSaveList();
 
     std::string raw_input = "";
@@ -160,7 +162,7 @@ bool createNewSave(MainCharacter& player, FlagArray& flags){
 
         // confirmation.
         if(raw_input == ""){
-            raw_input = player.getName();
+            raw_input = save.getPlayer().getName();
             std::cout << "【" << raw_input << "】（默認名稱）" << std::endl;
         }else{
             std::cout << "【" << raw_input << "】" << std::endl;
@@ -175,13 +177,15 @@ bool createNewSave(MainCharacter& player, FlagArray& flags){
 
     // create new save and export.
     SaveFile player_save(player_choice);
-    player = player_save.getPlayer();
-    flags = player_save.getFlags();
+    save = player_save;
+
+    MainCharacter player = save.getPlayer();
+    FlagArray flags = save.getFlags();
 
     player.setName(playerName);
 
-    player_save.update(1, player, flags);
-    player_save.exportTo();
+    save.update(1, player, flags);
+    save.exportTo();
 
     std::cout << "＞＞存檔建立完成！" << std::endl;
     delay_ms(TEXT_DELAY);
@@ -189,7 +193,7 @@ bool createNewSave(MainCharacter& player, FlagArray& flags){
     return true;
 }
 
-bool loadSave(MainCharacter& player, FlagArray& flags) {
+bool loadSave(SaveFile& save) {
     printSaveList();
 
     std::string raw_input = "";
@@ -231,8 +235,7 @@ bool loadSave(MainCharacter& player, FlagArray& flags) {
     }
 
     // read save data.
-    player = player_save.getPlayer();
-    flags = player_save.getFlags();
+    save = player_save;
 
     std::cout << "＞＞存檔讀取完成！" << std::endl;
     delay_ms(TEXT_DELAY);
@@ -257,4 +260,25 @@ void printSaveList() {
         std::cout << temp_save.getPlayer().getName() << " 第" << temp_save.getDayCnt() << "天" << '\n';
     }
     return;
+}
+
+//每天開始的固定處理與輸出
+void dayStart(int dayCnt){ 
+    cout << "\n=====     第   " << dayCnt << "   天     =====\n\n";
+}
+
+//每天結束的固定處理與輸出
+void dayEnd(int& dayCnt, MainCharacter player){
+    cout << "\n=====     第   " << dayCnt << "   天     =====\n\n";
+    cout << "\n=====     結 算 畫 面     =====\n\n";
+    cout << "現在的各項數值\n";
+    cout << "攻擊力：" << player.getATK() << '\n';
+    cout << "防禦力：" << player.getDEF() << '\n';
+    cout << "敏捷度：" << player.getSPD() << '\n';
+    cout << "技巧值：" << player.getSKL() << '\n';
+    cout << "幸運值：" << player.getLUK() << '\n';
+    cout << "精力值上限：" << player.getSPLimit() << '\n';
+    cout << "錢包餘額：" << player.getMNY() << '\n';
+    cout << "你的隊友：" << player.listPartner() << '\n';
+    dayCnt ++;
 }
