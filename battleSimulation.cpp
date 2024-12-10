@@ -1,10 +1,8 @@
 #include <bits/stdc++.h>
 #include "teamClass.h"
-using namespace std;
+#include "battleSimulationFunc.h"
 
-//輸出中間緩衝
-const std::chrono::milliseconds TEXT_DELAY = std::chrono::milliseconds(800);
-void delay_ms(std::chrono::milliseconds ms);
+using namespace std;
 
 // 擲硬幣，決定誰先發球
 void flipCoin(Team& player, Team& oppo);
@@ -42,7 +40,66 @@ int chooseAim();
 //計算攻擊傷害
 bool attackDamageCaculate(Team& attackSide, Team& oppoSide, int attackMethodNum, bool playing);
 
+//battleSimulationFunction, use in main.cpp
+bool battleSimulation(MainCharacter& player, MainCharacter& partner, MainCharacter& opponent1, MainCharacter& opponent2){
+    string playerTeamName = "";
+    cout << "你的隊名要叫做什麼？\n>>";
+    getline(cin, playerTeamName);
+    if (playerTeamName.empty()) {
+        cout << "隊名不能為空！請重新輸入。\n";
+        getline(cin, playerTeamName);
+    }
+    if (cin.fail()) {
+        cin.clear();  // 清除錯誤狀態
+        cin.ignore(INT_MAX, '\n');  // 清空緩衝區
+        cout << "輸入錯誤，請重新輸入。\n";
+        getline(cin, playerTeamName);
+    }
+    Team opponent(opponent1, opponent2, false, "我是超強的對手啦哈哈");
+    Team playerTeam(player, partner, true, playerTeamName);
+    
+    cout << "\n==========比賽開始！==========\n";
+    cout << "由 " << playerTeam.getTeamName() << " 對上 " << opponent.getTeamName() << " ！\n";
+    int endScore = 15;
+    cout << "當分數到達 " << endScore << " 分時遊戲結束！\n";
+    delay_ms(TEXT_DELAY);
 
+    flipCoin(playerTeam, opponent);
+
+    while (playerTeam.getScore() < endScore && opponent.getScore() < endScore) {
+        delay_ms(TEXT_DELAY);
+        cout << "========== 比賽進行中 ==========" << endl;
+        cout << "現在分數\n你的隊伍：" << playerTeam.getScore() << '\n';
+        cout << "對手隊伍：" << opponent.getScore() << '\n';
+        delay_ms(TEXT_DELAY);
+        
+        bool playing = true;
+        if(playerTeam.isServeTurn()){
+            playing = serve(playerTeam, opponent, playing);
+        }else{
+            playing = serve(opponent, playerTeam, playing);
+        }
+        while (playing) {
+            if(playerTeam.isRecieveTurn()){
+                playing = receive(playerTeam, opponent, playing);
+            }else if(opponent.isRecieveTurn()){
+                playing = receive(opponent, playerTeam, playing);
+            }
+            if(playing){
+                if(playerTeam.isAttackTurn()){
+                    playing = attack(playerTeam, opponent, playing);
+                }else if (opponent.isAttackTurn()){
+                    playing = attack(opponent, playerTeam, playing);
+                }
+            }
+        }
+    }
+
+    cout << (playerTeam.getScore() == endScore ? "恭喜你贏了！\n" : "你輸了！\n");
+    return (playerTeam.getScore() == endScore);
+}
+
+/*
 int main() {
     //設定亂數種子
     srand(time(NULL));
@@ -106,6 +163,8 @@ int main() {
     cout << (playerTeam.getScore() == endScore ? "恭喜你贏了！\n" : "你輸了！\n");
     return 0;
 }
+*/
+
 
 void delay_ms(std::chrono::milliseconds ms){
 	using namespace std::chrono;
