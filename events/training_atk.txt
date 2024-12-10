@@ -1,0 +1,6 @@
+【traning_atk】
+statChange
+ATK
+1
+
+endEvent

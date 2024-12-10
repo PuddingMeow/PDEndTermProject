@@ -84,11 +84,11 @@ dialogue
 「走吧，待會早八還有體適能。先去seven買個早餐吧！撐住，兄弟！」
 
 dialogue
-你
+player
 「．．．嗯。走吧。」
 
 dialogue
-你
+player
 啊啊，好想死啊。
 
 sysMsg
